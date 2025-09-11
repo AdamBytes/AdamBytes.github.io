@@ -1,38 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Sets the character encoding for the document to UTF-8 -->
     <meta charset="UTF-8">
+    <!-- Ensures the site is responsive on all devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Me</title>
+    <!-- Sets the title for the about page -->
+    <title>About Me</title>
+    <!-- Links to the main stylesheet in the root directory -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- The main header section, identical to the one on the landing page -->
     <header class="terminal-header">
+        <!-- A link that takes the user back to the home page -->
         <a href="index.html" class="profile-link">
             <div class="profile-box">
+                <!-- Links to the profile picture in the assets folder -->
                 <img src="assets/images/your-profile-picture.jpg" alt="Profile Picture" class="profile-pic">
             </div>
         </a>
+        <!-- The navigation links -->
         <nav class="header-links">
             <a href="resume.html" class="header-link">Resume</a>
-            <a href="contact.html" class="header-link">Contact Me</a>
+            <a href="about.html" class="header-link">About Me</a>
         </nav>
     </header>
     <hr class="header-line">
+    <!-- The main content area for the About Me page -->
     <main class="single-post">
-        <h1 class="post-title">Contact Me</h1>
-        <form action="YOUR_FORM_ENDPOINT" method="POST" class="contact-form">
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name" required><br><br>
+        <!-- The main title of the page -->
+        <h1 class="post-title">About Me</h1>
+        <!-- The body of the about me content, with sections for easy editing -->
+        <div class="post-body">
             
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" required><br><br>
+            <!-- Section 1: Introduction and Bio -->
+            <h2>Who I Am</h2>
+            <p>I am a [Your Professional Title], passionate about [Your Passions]. This is where you can write a short, engaging bio that introduces yourself in a personal, conversational tone.</p>
+            <p>Tell your visitors a little bit about who you are, what you do, and what you're hoping to achieve with your work.</p>
             
-            <label for="reason">Reason for contact:</label><br>
-            <textarea id="reason" name="reason" rows="4" required></textarea><br><br>
+            <!-- Section 2: The Journey and Story -->
+            <h2>My Journey</h2>
+            <p>Every professional has a story. Here, you can share yours.</p>
+            <p>For example, you can talk about what sparked your interest in [Your Field], how you got started, and some of the key experiences that have shaped your career or academic path so far. This section helps build a stronger connection with your audience.</p>
             
-            <input type="submit" value="Send Message">
-        </form>
+            <!-- Section 3: Key Skills and Expertise -->
+            <h2>My Expertise</h2>
+            <p>While my resume covers all the details, here's a quick look at some of my core skills:</p>
+            <ul>
+                <li>[Skill 1, e.g., Network Security]</li>
+                <li>[Skill 2, e.g., GRC Frameworks]</li>
+                <li>[Skill 3, e.g., IT Operations]</li>
+                <li>[Skill 4, e.g., Python Programming]</li>
+                <li>[Skill 5, e.g., Cloud Computing]</li>
+            </ul>
+        </div>
     </main>
 </body>
 </html>
