@@ -1,57 +1,51 @@
 /* --- Global & Typography --- */
-
-/* This section sets the basic style for the entire page */
+/* This section sets the basic style for the entire page. */
 body {
-    /* Sets the background color to a light grey, creating the paper-like effect */
+    /* Sets the background color to a light grey, creating a clean look */
     background-color: #f5f5f5;
     /* Sets the default text color to black for contrast */
     color: #000000;
-    /* Defines the font family. 'Courier New' is the classic 'terminal' font.
-       The other fonts are fallbacks in case the first one isn't available. */
+    /* Defines the font family, with 'Courier New' providing the 'terminal' look. */
     font-family: 'Courier New', Courier, monospace;
-    /* Removes the default white space around the page edges added by the browser */
+    /* Removes default browser margin and adds padding to the page content */
     margin: 0;
-    /* Adds padding around the entire content area, pulling it away from the edges */
     padding: 20px;
     /* Sets the spacing between lines of text to improve readability */
     line-height: 1.6;
 }
 
 /* --- Header & Navigation --- */
-
-/* This section styles the top part of your blog, including the profile picture and links */
+/* This section styles the top part of your blog. */
 .terminal-header {
-    /* Uses Flexbox, a modern CSS layout method, to arrange items */
+    /* Uses Flexbox to arrange items */
     display: flex;
-    /* Stacks the child elements (profile picture and links) vertically */
+    /* Stacks child items (profile and links) vertically */
     flex-direction: column;
     /* Horizontally centers the items inside the header */
     align-items: center;
-    /* Adds space at the bottom of the header section */
+    /* Adds space at the bottom of the header */
     padding-bottom: 20px;
 }
 
 /* Styles the container for the profile picture */
 .profile-box {
-    /* Sets a fixed square size for the container */
+    /* Defines a fixed square size for the container */
     width: 150px;
     height: 150px;
-    /* Adds a solid black border around the square */
+    /* Adds a solid black border */
     border: 2px solid #000;
-    /* Hides any part of the image that might spill out of the square container */
+    /* Hides any part of the image that spills out of the container */
     overflow: hidden;
-    /* Adds a small margin below the box, separating it from the links */
+    /* Adds a small margin below the box */
     margin-bottom: 10px;
 }
 
-/* Styles the profile picture itself */
+/* Styles the profile picture image itself */
 .profile-pic {
-    /* Makes the image fill the entire width of its container */
+    /* Makes the image fill the entire container */
     width: 100%;
-    /* Makes the image fill the entire height of its container */
     height: 100%;
-    /* This is key: it scales and crops the image to fill the container without distorting it,
-       which is great for keeping your profile picture looking good no matter its original size. */
+    /* Scales and crops the image to fill the container without distorting it */
     object-fit: cover;
 }
 
@@ -59,13 +53,13 @@ body {
 .header-links {
     /* Uses Flexbox to align the links side-by-side */
     display: flex;
-    /* Creates space between the links */
+    /* Creates horizontal space between the links */
     gap: 20px;
     /* Centers the links horizontally */
     justify-content: center;
 }
 
-/* Styles the individual links */
+/* Styles the individual navigation links */
 .header-link {
     /* Sets the link color to black */
     color: #000;
@@ -83,15 +77,14 @@ body {
     height: 2px;
     /* Sets the color of the line to black */
     background-color: #000;
-    /* Adds a large margin below the line to create visual separation */
+    /* Adds a large margin below the line for visual separation */
     margin-bottom: 40px;
 }
 
 /* --- Post Feed Layout --- */
-
-/* This section styles the list of your blog posts on the main page */
+/* This section styles the list of your blog posts on the main page. */
 .post-feed {
-    /* Sets a maximum width for the post list to keep it readable on very large screens */
+    /* Sets a maximum width for the post list to keep it readable on large screens */
     max-width: 800px;
     /* Centers the entire post list horizontally on the page */
     margin: 0 auto;
@@ -101,7 +94,7 @@ body {
 .post-item {
     /* Adds a black border around each post item */
     border: 1px solid #000;
-    /* Adds padding inside the post item to create space between the content and the border */
+    /* Adds padding inside the post item */
     padding: 15px;
     /* Adds space below each post to separate them */
     margin-bottom: 40px;
@@ -131,13 +124,13 @@ body {
     flex-shrink: 0;
 }
 
-/* Styles the image placeholder */
+/* Styles the blog post preview image */
 .post-image {
-    /* Sets a fixed size for the image placeholder */
+    /* Sets a fixed size for the image */
     width: 100px;
     height: 100px;
-    /* Sets a grey background color for the image placeholder */
-    background-color: #ccc;
+    /* Scales and crops the image to fit the box */
+    object-fit: cover;
 }
 
 /* Styles the container for the post's title and summary */
@@ -158,7 +151,7 @@ body {
     margin-bottom: 5px;
 }
 
-/* Adds a style that appears when the user hovers over the title with their mouse */
+/* Adds a style that appears when the user hovers over the title */
 .post-title-link:hover {
     /* Adds an underline on hover for better user experience */
     text-decoration: underline;
@@ -192,8 +185,34 @@ body {
     margin-right: 5px;
 }
 
-/* --- Responsive Design (Mobile First) --- */
+/* --- Single Post Layout --- */
+/* This section styles the full content of a single blog post. */
+.single-post {
+    /* Sets a maximum width to keep the content readable on large screens */
+    max-width: 800px;
+    /* Centers the post horizontally */
+    margin: 0 auto;
+    /* Adds a border around the post content */
+    border: 1px solid #000;
+    /* Adds space inside the border */
+    padding: 20px;
+}
 
+/* Styles the full-size images inside a single post */
+.post-body-image {
+    /* Ensures the image does not exceed the width of its container */
+    max-width: 100%;
+    /* Keeps the image's aspect ratio when resizing */
+    height: auto;
+    /* Makes the image a block element */
+    display: block;
+    /* Adds margin to the top and bottom, centering it horizontally */
+    margin: 20px auto;
+    /* Adds a border around the image */
+    border: 1px solid #000;
+}
+
+/* --- Responsive Design (Mobile First) --- */
 /* This section applies styles specifically to screens that are 600px wide or less */
 @media (max-width: 600px) {
     /* Changes the layout of the post content on small screens */
