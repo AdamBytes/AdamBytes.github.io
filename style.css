@@ -1,34 +1,38 @@
-/* Update the header for centering and remove the old links layout */
-.terminal-header {
-    display: flex;
-    flex-direction: column; /* Stacks items vertically */
-    align-items: center; /* Centers items horizontally */
-    padding-bottom: 20px;
-    position: relative;
+/* --- Global & Typography --- */
+body {
+    background-color: #f5f5f5;
+    color: #000000;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
 }
 
-/* New CSS for the profile box */
+/* --- Header & Navigation --- */
+.terminal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
 .profile-box {
-    width: 150px; /* A standard size for a professional profile image */
+    width: 150px;
     height: 150px;
     border: 2px solid #000;
-    overflow: hidden; /* Ensures the image doesn't spill out */
-    margin-bottom: 10px; /* Space between the box and the links */
-    display: flex; /* Centers the image inside the box */
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
+    margin-bottom: 10px;
 }
 
 .profile-pic {
-    width: 100%; /* Makes the image fill the box */
+    width: 100%;
     height: 100%;
-    object-fit: cover; /* This is key - it crops the image to fill the container without distorting it */
+    object-fit: cover;
 }
 
-/* Style and position the new centered links */
 .header-links {
     display: flex;
-    gap: 20px; /* Adds space between the links */
+    gap: 20px;
     justify-content: center;
 }
 
@@ -38,39 +42,88 @@
     font-weight: bold;
 }
 
-/* Adjust the post-item to move the date */
-.post-item {
-    display: flex;
-    flex-direction: column; /* Stacks the date on top of the content */
+.header-line {
+    border: none;
+    height: 2px;
+    background-color: #000;
     margin-bottom: 40px;
+}
+
+/* --- Post Feed Layout --- */
+.post-feed {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.post-item {
     border: 1px solid #000;
     padding: 15px;
+    margin-bottom: 40px;
 }
 
 .post-date {
-    order: 1; /* Puts the date on top */
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 .post-content {
-    order: 2; /* Puts the content below */
     display: flex;
-    align-items: center;
-    flex-grow: 1;
+    gap: 20px; /* Space between image and text */
 }
 
-/* Keep the image styles the same for consistency */
+.post-image-link {
+    display: block;
+    flex-shrink: 0; /* Prevents the image from shrinking */
+}
+
 .post-image {
     width: 100px;
     height: 100px;
     background-color: #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px;
 }
 
-.post-title, .single-post .post-title {
-    margin: 0 0 5px 0;
+.post-text-content {
+    flex-grow: 1;
+}
+
+.post-title-link {
+    color: #000;
+    text-decoration: none;
+    display: block; /* Makes the entire title clickable */
+    margin-bottom: 5px;
+}
+
+.post-title-link:hover {
+    text-decoration: underline; /* Add underline on hover for better UX */
+}
+
+.post-title {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.post-excerpt {
+    margin: 0;
+}
+
+.post-hashtags {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.post-hashtags span {
+    margin-right: 5px;
+}
+
+/* --- Responsive Design (Mobile First) --- */
+@media (max-width: 600px) {
+    .post-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .post-text-content {
+        text-align: center;
+    }
 }
