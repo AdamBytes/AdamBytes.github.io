@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Sets the character encoding for the document to UTF-8 -->
     <meta charset="UTF-8">
+    <!-- Ensures the site is responsive on all devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Sets the title for this specific blog post -->
     <title>My First Blog Post</title>
+    <!-- The path goes up two levels (../../) to find the stylesheet in the root folder -->
     <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
+    <!-- The main header section, identical to the one on the landing page -->
     <header class="terminal-header">
+        <!-- The path goes up two levels (../../) to find the main index.html file -->
         <a href="../../index.html" class="profile-link">
             <div class="profile-box">
+                <!-- The path goes up two levels (../../) to find the image in assets/images -->
                 <img src="../../assets/images/your-profile-picture.jpg" alt="Profile Picture" class="profile-pic">
             </div>
         </a>
         <nav class="header-links">
             <a href="../../resume.html" class="header-link">Resume</a>
-            <a href="../../contact.html" class="header-link">Contact Me</a>
+            <!-- The path goes up two levels (../../) to find the About Me page -->
+            <a href="../../about.html" class="header-link">About Me</a>
         </nav>
     </header>
     <hr class="header-line">
 
+    <!-- The main content area for the single blog post -->
     <main class="single-post">
+        <!-- The title of the post -->
         <h1 class="post-title">My First Blog Post Title</h1>
+        <!-- Container for metadata like the date -->
         <div class="post-meta">
+            <!-- The date of the blog post -->
             <div class="post-date">11/09/2025</div>
         </div>
+        <!-- The body of the post, where the main content will be -->
         <div class="post-body">
+            <!-- An example of a full-size image within the post body. The path is relative to this file. -->
             <img src="first-post-image.jpg" alt="Full size post image" class="post-body-image">
             <p>This is the full content of your first blog post. You can write your thoughts, share your learning, and include code snippets, tables, or images here.</p>
             <p>You can add more paragraphs as needed to expand on your topic.</p>
