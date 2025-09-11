@@ -1,42 +1,35 @@
-/* Basic Terminal-style Fonts & Colors */
-body {
-    background-color: #f5f5f5; /* Light grey */
-    color: #000000; /* Black text */
-    font-family: 'Courier New', Courier, monospace;
-    margin: 0;
-    padding: 20px;
-    line-height: 1.6;
-}
-
-/* Header & Navigation */
+/* Update the header for centering and remove the old links layout */
 .terminal-header {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column; /* Stacks items vertically */
+    align-items: center; /* Centers items horizontally */
     padding-bottom: 20px;
     position: relative;
 }
 
-.profile-link {
-    display: block;
+/* New CSS for the profile box */
+.profile-box {
+    width: 150px; /* A standard size for a professional profile image */
+    height: 150px;
+    border: 2px solid #000;
+    overflow: hidden; /* Ensures the image doesn't spill out */
+    margin-bottom: 10px; /* Space between the box and the links */
+    display: flex; /* Centers the image inside the box */
+    justify-content: center;
+    align-items: center;
 }
 
 .profile-pic {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid #000;
+    width: 100%; /* Makes the image fill the box */
+    height: 100%;
+    object-fit: cover; /* This is key - it crops the image to fill the container without distorting it */
 }
 
+/* Style and position the new centered links */
 .header-links {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
     display: flex;
-    justify-content: space-between;
-    padding: 0 10%;
-    box-sizing: border-box;
+    gap: 20px; /* Adds space between the links */
+    justify-content: center;
 }
 
 .header-link {
@@ -45,38 +38,29 @@ body {
     font-weight: bold;
 }
 
-.header-line {
-    border: none;
-    height: 2px;
-    background-color: #000;
-    margin-bottom: 40px;
-}
-
-/* Post Feed Layout (for index.html) */
-.post-feed {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
+/* Adjust the post-item to move the date */
 .post-item {
     display: flex;
+    flex-direction: column; /* Stacks the date on top of the content */
     margin-bottom: 40px;
     border: 1px solid #000;
     padding: 15px;
 }
 
 .post-date {
+    order: 1; /* Puts the date on top */
     font-weight: bold;
-    margin-right: 20px;
-    white-space: nowrap;
+    margin-bottom: 10px;
 }
 
 .post-content {
+    order: 2; /* Puts the content below */
     display: flex;
     align-items: center;
     flex-grow: 1;
 }
 
+/* Keep the image styles the same for consistency */
 .post-image {
     width: 100px;
     height: 100px;
@@ -87,27 +71,6 @@ body {
     margin-right: 20px;
 }
 
-.post-text {
-    flex-grow: 1;
-}
-
 .post-title, .single-post .post-title {
     margin: 0 0 5px 0;
-}
-
-/* Single Post Layout (for individual post pages) */
-.single-post {
-    max-width: 800px;
-    margin: 0 auto;
-    border: 1px solid #000;
-    padding: 20px;
-}
-
-.post-meta {
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.post-body {
-    white-space: pre-wrap;
 }
