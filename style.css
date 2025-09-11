@@ -1,129 +1,176 @@
 /* --- Global & Typography --- */
 body {
+    /* Sets the background color to a light grey */
     background-color: #f5f5f5;
+    /* Sets the default text color to black */
     color: #000000;
+    /* Defines the font family for the entire page, creating the 'terminal' look */
     font-family: 'Courier New', Courier, monospace;
+    /* Removes default browser margin and adds padding to the page content */
     margin: 0;
     padding: 20px;
+    /* Sets the spacing between lines of text for readability */
     line-height: 1.6;
 }
 
 /* --- Header & Navigation --- */
 .terminal-header {
+    /* Uses Flexbox to arrange items */
     display: flex;
+    /* Stacks child items (profile and links) vertically */
     flex-direction: column;
+    /* Horizontally centers the items */
     align-items: center;
+    /* Adds space at the bottom of the header section */
     padding-bottom: 20px;
 }
 
 .profile-box {
+    /* Defines a fixed square size for the profile picture container */
     width: 150px;
     height: 150px;
+    /* Adds a black border around the box */
     border: 2px solid #000;
+    /* Hides any part of the image that extends beyond the box */
     overflow: hidden;
+    /* Adds a small margin below the box */
     margin-bottom: 10px;
 }
 
 .profile-pic {
+    /* Makes the image fill the entire profile box */
     width: 100%;
     height: 100%;
+    /* Scales and crops the image to fill the container without distorting it */
     object-fit: cover;
 }
 
 .header-links {
+    /* Uses Flexbox to arrange the navigation links */
     display: flex;
+    /* Adds horizontal space between the links */
     gap: 20px;
+    /* Centers the links within their container */
     justify-content: center;
 }
 
 .header-link {
+    /* Sets the link color to black */
     color: #000;
+    /* Removes the default underline from links */
     text-decoration: none;
+    /* Makes the link text bold */
     font-weight: bold;
 }
 
 .header-line {
+    /* Removes the default border and sets the line's height and color */
     border: none;
     height: 2px;
     background-color: #000;
+    /* Adds space below the line */
     margin-bottom: 40px;
 }
 
 /* --- Post Feed Layout --- */
 .post-feed {
+    /* Sets a maximum width for the post list to keep it readable on large screens */
     max-width: 800px;
+    /* Centers the post list horizontally */
     margin: 0 auto;
 }
 
 .post-item {
+    /* Adds a border around each blog post item */
     border: 1px solid #000;
+    /* Adds padding inside the post item */
     padding: 15px;
+    /* Adds space between each post item */
     margin-bottom: 40px;
 }
 
 .post-date {
+    /* Makes the date text bold */
     font-weight: bold;
+    /* Adds space below the date */
     margin-bottom: 10px;
 }
 
 .post-content {
+    /* Uses Flexbox to align the image and text side-by-side */
     display: flex;
-    gap: 20px; /* Space between image and text */
+    /* Adds space between the image and the text */
+    gap: 20px;
 }
 
 .post-image-link {
-    display: block;
-    flex-shrink: 0; /* Prevents the image from shrinking */
+    /* Prevents the image container from shrinking on smaller screens */
+    flex-shrink: 0;
 }
 
 .post-image {
+    /* Sets a fixed size for the post image placeholder */
     width: 100px;
     height: 100px;
+    /* Sets a grey background for the image placeholder */
     background-color: #ccc;
 }
 
 .post-text-content {
+    /* Allows the text content to grow and fill the available space */
     flex-grow: 1;
 }
 
 .post-title-link {
+    /* Sets the link color and removes the underline */
     color: #000;
     text-decoration: none;
-    display: block; /* Makes the entire title clickable */
+    /* Makes the entire title area clickable */
+    display: block;
     margin-bottom: 5px;
 }
 
 .post-title-link:hover {
-    text-decoration: underline; /* Add underline on hover for better UX */
+    /* Adds an underline when the user hovers over the title */
+    text-decoration: underline;
 }
 
 .post-title {
+    /* Removes default browser margin for the heading */
     margin: 0;
+    /* Sets the font size for the title */
     font-size: 1.5em;
 }
 
 .post-excerpt {
+    /* Removes default browser margin for the paragraph */
     margin: 0;
 }
 
 .post-hashtags {
+    /* Adds space above the hashtags and sets font size/color */
     margin-top: 10px;
     font-size: 0.9em;
     color: #555;
 }
 
 .post-hashtags span {
+    /* Adds space between each hashtag */
     margin-right: 5px;
 }
 
 /* --- Responsive Design (Mobile First) --- */
+/* This section applies styles specifically to screens 600px wide or less */
 @media (max-width: 600px) {
     .post-content {
+        /* On small screens, stacks the image and text vertically */
         flex-direction: column;
+        /* Centers the image and text horizontally */
         align-items: center;
     }
     
     .post-text-content {
+        /* Centers the text content below the image */
         text-align: center;
     }
 }
