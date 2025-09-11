@@ -17,7 +17,7 @@ body {
 /* --- Header & Navigation --- */
 /* This section styles the top part of your blog. */
 .terminal-header {
-    /* Uses Flexbox to arrange items */
+    /* Uses Flexbox, a modern layout method, to arrange items */
     display: flex;
     /* Stacks child items (profile and links) vertically */
     flex-direction: column;
@@ -108,7 +108,7 @@ body {
     margin-bottom: 10px;
 }
 
-/* Styles the container holding the image and text */
+/* Styles the container holding the image and text summary */
 .post-content {
     /* Uses Flexbox to place the image and text side-by-side */
     display: flex;
@@ -116,7 +116,7 @@ body {
     gap: 20px;
 }
 
-/* Styles the clickable link around the image */
+/* Styles the clickable link around the post image */
 .post-image-link {
     /* Makes the link behave as a block element */
     display: block;
@@ -129,7 +129,7 @@ body {
     /* Sets a fixed size for the image */
     width: 100px;
     height: 100px;
-    /* Scales and crops the image to fit the box */
+    /* Scales and crops the image to fit the box without distorting it */
     object-fit: cover;
 }
 
