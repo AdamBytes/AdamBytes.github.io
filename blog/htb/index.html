@@ -1,1 +1,71 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Sets the character encoding for the document to UTF-8 -->
+    <meta charset="UTF-8">
+    <!-- Ensures the site is responsive on all devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Sets the title for the Hack The Box blog section -->
+    <title>HTB Write-ups & Learning</title>
+    <!-- Links to the main stylesheet. The `../../` is needed to go up two directories to reach the root `style.css` file. -->
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <!-- The main header section, containing the profile and navigation links -->
+    <header class="terminal-header">
+        <!-- A link that takes the user back to the home page. The `../../` is used to go back to the root directory where `index.html` is located. -->
+        <a href="../../index.html" class="profile-link">
+            <!-- A container for the profile picture -->
+            <div class="profile-box">
+                <!-- Links to the profile picture in the assets folder. -->
+                <img src="../../assets/images/your-profile-picture.jpg" alt="Profile Picture" class="profile-pic">
+            </div>
+        </a>
+        <!-- The navigation bar with links to other pages. The `../../` is used to go back to the root directory for all these links. -->
+        <nav class="header-links">
+            <a href="../../resume.html" class="header-link">Resume</a>
+            <a href="../../about.html" class="header-link">About Me</a>
+            <a href="../../blog/htb/index.html" class="header-link" target="_blank">HTB</a>
+        </nav>
+    </header>
+    <hr class="header-line">
+
+    <!-- The main content area where your HTB blog posts will be listed -->
+    <main class="post-feed">
+        <!-- The main title for this section -->
+        <h1 class="post-title" style="text-align: center;">Hack The Box Write-ups & Learning</h1>
+
+        <!-- Start of a single blog post item. Copy this entire block for each new HTB post. -->
+        <!-- Update the `href` with the correct path to your new HTB blog post file. -->
+        <!-- Update the `h2` with the title of your post. -->
+        <!-- Update the `div` with the date. -->
+        <!-- Update the `footer` with your specific hashtags. -->
+        <!-- Update the `img` `src` with the correct path to the thumbnail for the post. -->
+        <!-- Update the `p` with a brief summary of the post. -->
+        <article class="post-item">
+            <a href="your-htb-post-name.html" class="post-title-link">
+                <h2 class="post-title">Your First HTB Post Title Here</h2>
+            </a>
+            <div class="post-date">dd/mm/yyyy</div>
+            <footer class="post-hashtags">
+                <span>#HackTheBox</span>
+                <span>#HTB</span>
+                <span>#Cybersecurity</span>
+            </footer>
+            <div class="post-content">
+                <a href="your-htb-post-name.html" class="post-image-link">
+                    <img src="../../assets/images/your-htb-thumbnail.jpg" alt="HTB Post Image" class="post-image">
+                </a>
+                <div class="post-text-content">
+                    <p class="post-excerpt">
+                        A brief excerpt or summary of your Hack The Box write-up.
+                    </p>
+                </div>
+            </div>
+        </article>
+        <!-- End of blog post item -->
+        
+    </main>
+</body>
+</html>
