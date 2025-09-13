@@ -1,67 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Sets the character encoding for the document to UTF-8 -->
     <meta charset="UTF-8">
-    <!-- Ensures the site is responsive on all devices by setting the viewport width -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Sets the title that appears in the browser tab and search results -->
     <title>My Portfolio Blog</title>
-    <!-- Provides a brief description of the page for search engine optimization (SEO) -->
     <meta name="description" content="A portfolio and blog showcasing my journey in cybersecurity, IT, and GRC.">
-    <!-- Links to the main stylesheet, located in the root directory, for all styling -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- The main header section, containing the profile and navigation links -->
     <header class="terminal-header">
-        <!-- A link that wraps the profile picture, taking the user back to the home page -->
         <a href="index.html" class="profile-link">
-            <!-- A container for the profile picture, used to control its size and shape with CSS -->
             <div class="profile-box">
-                <!-- The image tag for your profile picture. The path is relative to this file's location. -->
                 <img src="assets/images/your-profile-picture.jpg" alt="Profile Picture" class="profile-pic">
             </div>
         </a>
-        <!-- The navigation bar with links to other pages -->
         <nav class="header-links">
-            <!-- Link to the resume page -->
             <a href="resume.html" class="header-link">Resume</a>
-            <!-- Link to the About Me page (previously Contact Me) -->
             <a href="about.html" class="header-link">About Me</a>
+            <a href="blog/htb/htb.html" class="header-link">HTB</a>
         </nav>
     </header>
-    <!-- A horizontal line to visually separate the header from the main content -->
     <hr class="header-line">
     
-    <!-- The main content area where your blog posts will be listed -->
     <main class="post-feed">
-        <!-- A single blog post item. You will copy this entire block for each new post. -->
         <article class="post-item">
-            <!-- A clickable link for the post's title. The URL points to the post's folder. -->
             <a href="blog/01_first-post/" class="post-title-link">
-                <!-- The title of the blog post -->
                 <h2 class="post-title">Stepping Stones</h2>
             </a>
-            <!-- The date of the blog post, in dd/mm/yyyy format -->
             <div class="post-date">12/09/2025</div>
-            <!-- Hashtags for categorization and search, wrapped in a footer -->
             <footer class="post-hashtags">
                 <span>#HTML</span>
                 <span>#CSS</span>
                 <span>#portfolio</span>
                 <span>#learning</span>
             </footer>
-            <!-- Container for the image and text summary of the post -->
             <div class="post-content">
-                <!-- A clickable link that makes the image go to the full post -->
                 <a href="blog/01_first-post/" class="post-image-link">
-                    <!-- The image for the blog post preview. You can replace this with a post-specific image. -->
                     <img src="assets/images/01_placeholder-post-image.jpg" alt="First blog post image" class="post-image">
                 </a>
-                <!-- The container for the post's summary text -->
                 <div class="post-text-content">
-                    <!-- The brief summary or excerpt of the blog post -->
                     <p class="post-excerpt">
                         This post chronicles my hands-on journey learning ICT, cybersecurity, and digital transformation by building a personal portfolio with HTML, CSS, and GitHub.
                     </p>
@@ -71,3 +48,243 @@
     </main>
 </body>
 </html>
+```eof
+---
+
+### **New Files:** `blog/htb/htb.html` and more
+
+```html:HTB Landing Page:blog/htb/htb.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hack The Box Tutorials</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <header class="terminal-header">
+        <a href="../../index.html" class="profile-link">
+            <div class="profile-box">
+                <img src="../../assets/images/your-profile-picture.jpg" alt="Profile Picture" class="profile-pic">
+            </div>
+        </a>
+        <nav class="header-links">
+            <a href="../../resume.html" class="header-link">Resume</a>
+            <a href="../../about.html" class="header-link">About Me</a>
+            <a href="htb.html" class="header-link">HTB</a>
+        </nav>
+    </header>
+    <hr class="header-line">
+    <main class="post-feed">
+        <article class="post-item">
+            <a href="getting-started/getting-started.html" class="post-title-link">
+                <h2 class="post-title">Getting Started</h2>
+            </a>
+            <div class="post-text-content">
+                <p class="post-excerpt">
+                    A collection of tutorials for the Hack The Box "Getting Started" labs.
+                </p>
+            </div>
+        </article>
+    </main>
+</body>
+</html>
+```eof
+```html:Getting Started Labs:blog/htb/getting-started/getting-started.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started Labs</title>
+    <link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+    <header class="terminal-header">
+        <a href="../../../index.html" class="profile-link">
+            <div class="profile-box">
+                <img src="../../../assets/images/your-profile-picture.jpg" alt="Profile Picture" class="profile-pic">
+            </div>
+        </a>
+        <nav class="header-links">
+            <a href="../../../resume.html" class="header-link">Resume</a>
+            <a href="../../../about.html" class="header-link">About Me</a>
+            <a href="../../htb.html" class="header-link">HTB</a>
+        </nav>
+    </header>
+    <hr class="header-line">
+    <main class="post-feed">
+        <h1 class="post-title">Getting Started Labs</h1>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li class="post-item" style="margin-bottom: 2rem;">
+                <a href="meow.html" class="post-title-link">
+                    <h2 class="post-title">Meow</h2>
+                </a>
+            </li>
+            <li class="post-item" style="margin-bottom: 2rem;">
+                <a href="fawn.html" class="post-title-link">
+                    <h2 class="post-title">Fawn</h2>
+                </a>
+            </li>
+            <li class="post-item" style="margin-bottom: 2rem;">
+                <a href="dancing.html" class="post-title-link">
+                    <h2 class="post-title">Dancing</h2>
+                </a>
+            </li>
+            <li class="post-item" style="margin-bottom: 2rem;">
+                <a href="redeemer.html" class="post-title-link">
+                    <h2 class="post-title">Redeemer</h2>
+                </a>
+            </li>
+        </ul>
+    </main>
+</body>
+</html>
+```eof
+---
+
+### **New Files:** Lab Tutorial Templates
+
+```html:Meow Tutorial Template:blog/htb/getting-started/meow.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meow HTB Tutorial</title>
+    <link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+    <header class="terminal-header">
+        <a href="../../../index.html" class="profile-link">
+            <div class="profile-box">
+                <img src="../../../assets/images/your-profile-picture.jpg" alt="Profile Picture" class="profile-pic">
+            </div>
+        </a>
+        <nav class="header-links">
+            <a href="../../../resume.html" class="header-link">Resume</a>
+            <a href="../../../about.html" class="header-link">About Me</a>
+            <a href="../../htb.html" class="header-link">HTB</a>
+        </nav>
+    </header>
+    <hr class="header-line">
+    <main class="single-post">
+        <h1 class="post-title">Meow: A Hack The Box Tutorial</h1>
+        <div class="post-body">
+            <p>
+                This is a placeholder for your detailed tutorial on the "Meow" lab. You can replace this text with your notes, commands, and screenshots.
+            </p>
+            <h2 class="post-title" style="font-size: 1.5rem; font-weight: bold; margin-top: 2rem;">Initial Reconnaissance</h2>
+            <p>
+                [Your content here, e.g., scanning the target IP with Nmap]
+            </p>
+            
+            <h2 class="post-title" style="font-size: 1.5rem; font-weight: bold; margin-top: 2rem;">Exploitation</h2>
+            <p>
+                [Your content here, detailing how you gained initial access]
+            </p>
+
+            <h2 class="post-title" style="font-size: 1.5rem; font-weight: bold; margin-top: 2rem;">Privilege Escalation</h2>
+            <p>
+                [Your content here, explaining how you became the root user]
+            </p>
+
+            <h2 class="post-title" style="font-size: 1.5rem; font-weight: bold; margin-top: 2rem;">Conclusion</h2>
+            <p>
+                [Your summary and final thoughts on the lab]
+            </p>
+        </div>
+    </main>
+</body>
+</html>
+```eof
+```html:Fawn Tutorial Template:blog/htb/getting-started/fawn.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fawn HTB Tutorial</title>
+    <link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+    <header class="terminal-header">
+        <a href="../../../index.html" class="profile-link">
+            <div class="profile-box">
+                <img src="../../../assets/images/your-profile-picture.jpg" alt="Profile Picture" class="profile-pic">
+            </div>
+        </a>
+        <nav class="header-links">
+            <a href="../../../resume.html" class="header-link">Resume</a>
+            <a href="../../../about.html" class="header-link">About Me</a>
+            <a href="../../htb.html" class="header-link">HTB</a>
+        </nav>
+    </header>
+    <hr class="header-line">
+    <main class="single-post">
+        <h1 class="post-title">Fawn: A Hack The Box Tutorial</h1>
+        <div class="post-body">
+            <p>
+                This is a placeholder for your detailed tutorial on the "Fawn" lab. You can replace this text with your notes, commands, and screenshots.
+            </p>
+            <h2 class="post-title" style="font-size: 1.5rem; font-weight: bold; margin-top: 2rem;">Initial Reconnaissance</h2>
+            <p>
+                [Your content here, e.g., scanning the target IP with Nmap]
+            </p>
+            
+            <h2 class="post-title" style="font-size: 1.5rem; font-weight: bold; margin-top: 2rem;">Exploitation</h2>
+            <p>
+                [Your content here, detailing how you gained initial access]
+            </p>
+
+            <h2 class="post-title" style="font-size: 1.5rem; font-weight: bold; margin-top: 2rem;">Privilege Escalation</h2>
+            <p>
+                [Your content here, explaining how you became the root user]
+            </p>
+
+            <h2 class="post-title" style="font-size: 1.5rem; font-weight: bold; margin-top: 2rem;">Conclusion</h2>
+            <p>
+                [Your summary and final thoughts on the lab]
+            </p>
+        </div>
+    </main>
+</body>
+</html>
+```eof
+```html:Dancing Tutorial Template:blog/htb/getting-started/dancing.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dancing HTB Tutorial</title>
+    <link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+    <header class="terminal-header">
+        <a href="../../../index.html" class="profile-link">
+            <div class="profile-box">
+                <img src="../../../assets/images/your-profile-picture.jpg" alt="Profile Picture" class="profile-pic">
+            </div>
+        </a>
+        <nav class="header-links">
+            <a href="../../../resume.html" class="header-link">Resume</a>
+            <a href="../../../about.html" class="header-link">About Me</a>
+            <a href="../../htb.html" class="header-link">HTB</a>
+        </nav>
+    </header>
+    <hr class="header-line">
+    <main class="single-post">
+        <h1 class="post-title">Dancing: A Hack The Box Tutorial</h1>
+        <div class="post-body">
+            <p>
+                This is a placeholder for your detailed tutorial on the "Dancing" lab. You can replace this text with your notes, commands, and screenshots.
+            </p>
+            <h2 class="post-title" style="font-size: 1.5rem; font-weight: bold; margin-top: 2rem;">Initial Reconnaissance</h2>
+            <p>
+                [Your content here, e.g., scanning the target IP with Nmap]
+            </p>
+            
+            <h2 class="post-title" style="font-size: 1.5rem; font-weight: bold; margin-top: 2rem;">Exploitation</h2>
+            <p>
