@@ -1,69 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Sets the character encoding for the document to UTF-8 -->
     <meta charset="UTF-8">
-    <!-- Ensures the site is responsive on all devices by setting the viewport width -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Sets the title that appears in the browser tab and search results -->
     <title>My Portfolio Blog</title>
-    <!-- Provides a brief description of the page for search engine optimization (SEO) -->
     <meta name="description" content="A portfolio and blog showcasing my journey in cybersecurity, IT, and GRC.">
-    <!-- Links to the main stylesheet, located in the root directory, for all styling -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- The main header section, containing the profile and navigation links -->
     <header class="terminal-header">
-        <!-- A link that wraps the profile picture, taking the user back to the home page -->
         <a href="index.html" class="profile-link">
-            <!-- A container for the profile picture, used to control its size and shape with CSS -->
             <div class="profile-box">
-                <!-- The image tag for your profile picture. The path is relative to this file's location. -->
                 <img src="assets/images/your-profile-picture.jpg" alt="Profile Picture" class="profile-pic">
             </div>
         </a>
-        <!-- The navigation bar with links to other pages -->
         <nav class="header-links">
-            <!-- Link to the resume page -->
             <a href="resume.html" class="header-link">Resume</a>
-            <!-- Link to the About Me page (previously Contact Me) -->
             <a href="about.html" class="header-link">About Me</a>
-            <!-- NEW: Link to the Hack The Box section -->
-            <a href="blog/htb/htb.html" class="header-link">HTB</a>
+            <a href="blog/htb/index.html" class="header-link" target="_blank">HTB</a>
         </nav>
     </header>
-    <!-- A horizontal line to visually separate the header from the main content -->
     <hr class="header-line">
     
-    <!-- The main content area where your blog posts will be listed -->
     <main class="post-feed">
-        <!-- A single blog post item. You will copy this entire block for each new post. -->
         <article class="post-item">
-            <!-- A clickable link for the post's title. The URL points to the post's folder. -->
-            <a href="blog/01_first-post/" class="post-title-link">
-                <!-- The title of the blog post -->
+            <a href="blog/gblog/01_stepping-stones.html" class="post-title-link">
                 <h2 class="post-title">Stepping Stones</h2>
             </a>
-            <!-- The date of the blog post, in dd/mm/yyyy format -->
             <div class="post-date">12/09/2025</div>
-            <!-- Hashtags for categorization and search, wrapped in a footer -->
             <footer class="post-hashtags">
                 <span>#HTML</span>
                 <span>#CSS</span>
                 <span>#portfolio</span>
                 <span>#learning</span>
             </footer>
-            <!-- Container for the image and text summary of the post -->
             <div class="post-content">
-                <!-- A clickable link that makes the image go to the full post -->
-                <a href="blog/01_first-post/" class="post-image-link">
-                    <!-- The image for the blog post preview. You can replace this with a post-specific image. -->
-                    <img src="assets/images/01_placeholder-post-image.jpg" alt="First blog post image" class="post-image">
+                <a href="blog/gblog/01_stepping-stones.html" class="post-image-link">
+                    <img src="assets/images/01_thumbnail.jpg" alt="First blog post image" class="post-image">
                 </a>
-                <!-- The container for the post's summary text -->
                 <div class="post-text-content">
-                    <!-- The brief summary or excerpt of the blog post -->
                     <p class="post-excerpt">
                         This post chronicles my hands-on journey learning ICT, cybersecurity, and digital transformation by building a personal portfolio with HTML, CSS, and GitHub.
                     </p>
