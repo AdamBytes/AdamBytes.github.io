@@ -1,1 +1,82 @@
+/* --- Global Styles --- */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #eaeaea; /* Light grey background */
+  color: #333; /* Dark grey text for readability */
+}
 
+h1, h2, h3 {
+  margin-top: 0;
+  color: #222;
+}
+
+a {
+  color: #007acc; /* Soft blue accent */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* --- Header --- */
+header {
+  text-align: center;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-bottom: 2px solid #ccc;
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+/* --- Navigation --- */
+nav {
+  margin-top: 1rem;
+}
+
+nav a {
+  margin: 0 1rem;
+  font-weight: bold;
+}
+
+/* --- Main Content Layout --- */
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* --- Post Summary Cards --- */
+.post-summary {
+  background-color: #f5f5f5; /* Slightly lighter grey */
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+.post-summary h2 {
+  margin-bottom: 0.5rem;
+}
+
+.post-summary p {
+  margin: 0.5rem 0;
+}
+
+/* --- Single Post Layout --- */
+.single-post {
+  background-color: #f5f5f5;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+.single-post
