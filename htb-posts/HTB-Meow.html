@@ -23,49 +23,46 @@
     <h2>HTB: Meow</h2>
     <p><strong>Date:</strong> 13 September 2025</p>
 
-    <p>Meow is the beginning of the Starting Point process on Hack The Box labs. The learning outcomes for the Starting Point program are to gain fundamental skills for penetration testing. In these tutorials, we learn to connect to various services such as FTP, SFTP, SMB, Telnet, RSync, and RDP anonymously.</p>
+    <p><strong>Overview:</strong> <code>Meow</code> is the first machine in the Starting Point series on Hack The Box. The goal is to build foundational skills in penetration testing by connecting to services like <code>FTP</code>, <code>SFTP</code>, <code>SMB</code>, <code>Telnet</code>, <code>RSync</code>, and <code>RDP</code> anonymously.</p>
 
-    <p>We also learn tools such as Nmap, the Bash terminal, and how to communicate with machines and identify vulnerabilities.</p>
+    <p>We also learn tools such as <code>Nmap</code>, the <code>Bash</code> terminal, and how to communicate with machines and identify vulnerabilities.</p>
 
     <h3>Enumeration</h3>
-    <p>As a core process for any kind of penetration testing, we need to spend time gathering information from a client or target system. This is the first step and can save us a lot of time and hassle, so we need to make sure we don't overlook anything crucial.</p>
+    <p>Enumeration is the first and most critical step in penetration testing. It involves gathering information about the target system. Skipping this step can lead to missed vulnerabilities and wasted time.</p>
 
     <h3>Start Process</h3>
-    <p>From my experience working with computers at home and in the workplace, I knew that Ping was the tool to check if the target host was reachable. I tried <em>ping [TARGET IP]</em> and confirmed it was returning responses. Though I had little experience with Linux (in this case, Parrot OS), I didn’t know how to ping a specific number of times or how to cancel it. After a quick search, I found that Ctrl + C cancels the ping, and <em>-c</em> specifies the count.</p>
+    <p>I began by using <code>ping [TARGET IP]</code> to check if the host was reachable. It responded successfully. Since I was using <code>Parrot OS</code> and was unfamiliar with Linux commands, I learned that <code>Ctrl + C</code> cancels the ping, and <code>-c</code> allows you to specify the number of pings.</p>
 
     <h3>Nmap Scans</h3>
-    <p>I had read about Nmap in HTB materials and my CompTIA coursework. In short, Nmap is a network mapper used for scanning and host discovery. It supports features like network discovery, port scanning, OS fingerprinting, vulnerability assessment, and network monitoring.</p>
-
-    <p>I learned two useful commands:</p>
+    <p><code>Nmap</code> is a powerful network scanner used for host discovery and vulnerability assessment. I used two key commands:</p>
     <ul>
-      <li><strong>sudo nmap -sV [IP Address]</strong>: Scans for open ports and attempts to identify service versions.</li>
-      <li><strong>sudo nmap -Pn [IP Address]</strong>: Skips host discovery and assumes the host is up. Useful when ICMP is blocked by firewalls.</li>
+      <li><code>sudo nmap -sV [IP Address]</code>: Scans for open ports and identifies service versions.</li>
+      <li><code>sudo nmap -Pn [IP Address]</code>: Skips host discovery and assumes the host is up—useful when ICMP is blocked.</li>
     </ul>
-
-    <p>From scanning the IP address, I discovered that a Telnet service was open on port 23.</p>
+    <p>The scan revealed that <code>Telnet</code> was running on <code>Port 23</code>.</p>
 
     <h3>Telnet: Connecting to the Box</h3>
-    <p>Telnet is a protocol used to connect to remote machines via a command line interface. The command is <em>telnet [IP address]</em>. It then prompts for a username and password. Knowing Telnet is insecure, I tried common usernames like <em>admin</em>, <em>administrator</em>, and <em>root</em>—and using the same for the password. It let me in.</p>
+    <p><code>Telnet</code> is a protocol used to connect to remote machines via a command-line interface. I used <code>telnet [IP address]</code> and was prompted for a username and password. Knowing Telnet is insecure, I tried common combinations like <code>admin</code>, <code>administrator</code>, and <code>root</code>—and it let me in.</p>
 
-    <p>After researching insecure credentials, I learned that brute force attacks can be used with scripts or tools to guess login combinations. I also explored whether encoding Telnet with base64 would improve security—but it doesn’t. Telnet transmits data in plain text, meaning anyone can intercept and read it. Base64 is just encoding, not encryption, and can be easily decoded.</p>
+    <p>I researched brute force attacks and learned that tools can automate login attempts. I also considered encoding Telnet traffic with <code>base64</code>, but discovered that Telnet transmits data in plain text. <code>base64</code> is not encryption—it’s easily decoded.</p>
 
-    <p>Once inside Telnet, I familiarised myself with its options using <em>help</em> and <em>?</em>. I used <em>ls</em> to list files in the directory and discovered these useful commands:</p>
+    <p>Inside Telnet, I typed <code>help</code> and <code>?</code> to explore available commands. I used <code>ls</code> to list files and discovered:</p>
     <ul>
-      <li><strong>ls -l</strong>: Displays files in long list format.</li>
-      <li><strong>ls -a</strong>: Includes hidden files.</li>
+      <li><code>ls -l</code>: Displays files in long list format.</li>
+      <li><code>ls -a</code>: Includes hidden files.</li>
     </ul>
 
-    <p>I noticed a file named <em>flag.txt</em>. I used <em>cat flag.txt</em> to read it, and it revealed the hash value needed to complete the room.</p>
+    <p>I found a file named <code>flag.txt</code>. Using <code>cat flag.txt</code>, I retrieved the hash value to complete the room.</p>
 
     <h3>Final Thoughts</h3>
-    <p>This was my first interaction with penetration testing, and it was exciting to learn the basics. I walked away with a better understanding of:</p>
+    <p>This was my first hands-on experience with penetration testing. Key takeaways:</p>
     <ul>
       <li>How to identify and connect to services</li>
       <li>The importance of enumeration</li>
-      <li>Basic Linux navigation</li>
+      <li>Basic Linux navigation and terminal commands</li>
     </ul>
 
-    <p>It’s a simple start, but it lays the groundwork for more complex challenges ahead.</p>
+    <p>It’s a simple start, but it lays the groundwork for more advanced challenges ahead.</p>
   </main>
 </body>
 </html>
