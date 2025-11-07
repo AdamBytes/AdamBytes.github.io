@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Fawn</title>
+  <meta name="description" content="Craig's first blog post documenting his journey into cybersecurity and digital transformation." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <img src="../assets/images/profile.jpg" alt="Profile Picture" class="profile-pic" />
+    <h1>HTB: Meow</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About Me</a>
+      <a href="../resume.html">Resume</a>
+      <a href="../htb.html">Hack The Box</a>
+    </nav>
+  </header>
+
+  <main class="single-post">
+    <h2>HTB: Fawn</h2>
+    <p><strong>Date:</strong> 14 September 2025</p>
+
+    <p><strong>Overview:</strong> Fawn is the second machine in the ‘Starting Point - Tier 0’ series on Hack The Box. The core focus for Fawn is to understand that poorly configured services are vulnerable; these vulnerabilities can be exploited and an intruder can take advantage of these misconfigurations. 
+In the context of Fawn, we are asked to exercise our understanding of the File Transfer Protocol (FTP). FTP is a long-standing protocol in all host operating systems and has been used for managing simple file tasks. In some cases, an FTP might bypass firewall checks and other parameters that have been put in place, allowing for easier manipulation of data. More than likely, a poorly configured FTP protocol or server allows for log collection, assisting an intruder in determining weaknesses in a network.
+</p>
+
+    <h3>Important Considerations</h3>
+    <p><strong>GUI/Terminal</strong></p>: FTP servers can be navigated through the terminal or a Graphical User Interface.
+    <p><strong>Client/Server</strong></p>: FTP uses this model architecture. The client that uploads would be the host machine, and the server is a centralised storage space. The host machine is up/downloads whereas the server is designed to store the transferable data.
+    <p><strong>Port number</strong></p>: FTP uses port 21 - this is an active service that is reserved for the IP address of the target machine for this protocol. To make a basic web server we would also need Secure Shell (SSH - port 22) and Hypertext Transfer Protocol Secure (HTTPS - port 80).
+    <p><strong>Man-in-the-Middle</strong></p>: It must be noted that FTP can require authentication (i.e. user credentials) before permitting a host machine to access the files. However, this is a vulnerability as network traffic can be intercepted and the files can be read in plaintext. It is important to provide an encryption layer such as the Secure Socket Layer (SSL) or the Transport Layer Security (TLS) protocols to prevent a Man-in-the-Middle Attack.
+
+
+    <h3>Enumeration</h3>
+    <p>As always, we need to start with enumeration (gathering information) as it is the first and most critical step in penetration testing. This would involve gathering information about the target system by slowly mapping out key vulnerabilities - it’s making an assessment. Skipping this step can lead to missed vulnerabilities and wasted time.</p>
+
+    <p><strong>Task 1 - What does the 3-letter acronym FTP stand for?</strong></p>
+    <p>Answer: File Transfer Protocol</p>
+    <p>This is also known as a listening port and it is typically found on port 21. </p>
+    
+    <p><strong>Task 2 - What port does the FTP service on manually?</strong></p>
+    <p>Answer: 21</p>
+    <p>I relied on my knowledge from studying this protocol and the OSI model. It can also be determined by using the following Nmap command in the terminal. </p>
+    <code>sudo nmap -sV [IP Address]</code>
+    
+    <p><strong>Task 3 - FTP sends data in the clear, without any encryption. What acronym is used for a later protocol designed to provide similar functionality to FTP but securely, as an extension of the SSH protocol?</strong></p>
+    <p>Answer: SFTP</p>
+    <p> This is Secure File Transfer Protocol. It does as described in the question and I relied on my former studying to attain this answer.</p>
+    
+    <p><strong>Task 4 - What is the command we can use to send an ICMP echo request to test our connection to the target?</strong></p>
+    <p>Answer: <code>ping</code></p>
+    <p>ICMP is the abbreviation for Internet Control Message Protocol. This is a network layer protocol used by devices to send information such as error messages and operational alerts. It is a fundamental protocol used in networking for diagnostics.</p>
+    <p>An echo request is when a device sends a packet of information to another device and then receives the same packet in return, determining if the target machine is readable.</p>
+    
+    <p><strong>Task 5: From your scans, what version is FTP running on the target?</strong></p>
+    <p>Answer: vsftpd 3.0.3</p>
+    <p><code>sudo nmap -sV [IP Address]</code>
+    <p>To determine the version of FTP, we would need to use a network mapping tool like Nmap and issue a command to determine the services and versions open on that specific port (21). We understand that Nmap has diagnostic elements attached to it as a tool, in this case we would use the extension <code>-sV</code> as this will give us the version of the FTP service. We would use this to determine if we could exploit an outdated version of FTP.</p>
+    
+    <h3>Establishing a foothold</h3>
+    
+    <p><strong>Task 6: From your scans, what OS Type is running on the target?</strong></p>
+    <p>Answer: Unix</p>
+    
+    <p><strong>Task 7: What is the command we need to run in order to display the ‘ftp’ client help menu?</strong></p>
+    <p>Answer: <code>ftp -></code></p>
+    <p>This is a typical suffix for terminal commands to display their help menu.</p>
+    
+    <p><strong>Task 8: What is the username that is used over FTP when you want to log in without having an account?</strong></p>
+    <p>Answer: anonymous</p>
+    <p>Largely, this is negligent behaviour - a misconfigured FTP service would allow any anonymous account to login is any other authenticated user. When prompted for a password, ‘anonymous’ would be the username followed by any password. This occurs as it disregards the password once it registers the anonymous account.</p>
+        
+    <p><strong>Task 9: What is the response code we get for the FTP message ‘Login Successful’?</strong></p>
+    <p>Answer: 230</p>
+    <p>The terminal will let us know if we have logged in successfully, and what changes can be made. To see the help menu, type: <code>help</code></p>
+
+    <p><strong>Task 10: There are a couple of commands we can use to list the files and directories available on the FTP server. One is dir. What is the other way to list files on a Linux system?</strong></p>
+    <p>Answer: <code>ls</code></p>
+    <p>There is a distinction between ‘dir’ and ‘ls’ - ‘dir’ returns a full directory listing whereas ‘ls’ returns a simplified directory.</p>
+    
+    <p><strong>Task 11: What is the command used to download the file we found on the FTP server?</strong></p>
+    <p>Answer: <code>get</code></p>
+    <p>We need to be specific about the respective file that we want, so we use get flat.txt. It can be read either in the terminal or the downloads file.</p>
+    
+    <p><strong>Task 12: Submit the root flag</strong></p>
+    <p>Answer: Following the instructions above, will give you the root flag</p>
+
+    <h3>Final Thoughts</h3>
+    <p>It was a fun exercise in actually using protocols that I had learnt about and messed around before when I had very little understanding - though rudimentary it did make me consider the following aspects going forward.</p>
+    <ul>
+      <li>Make sure that your own FTP version is up to date</li>
+      <li>Much like the gym, simple mistakes can have devastating consequences.</li>
+      <li>Spend time reading documentation on what different commands do to get a holistic picture of the tool or service that you’re engaging with. </li>
+    </ul>
+
+  </main>
+</body>
+</html>
