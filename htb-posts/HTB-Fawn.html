@@ -28,11 +28,10 @@ In the context of Fawn, we are asked to exercise our understanding of the File T
 </p>
 
     <h3>Important Considerations</h3>
-    <p><strong>GUI/Terminal</strong></p>: FTP servers can be navigated through the terminal or a Graphical User Interface.
-    <p><strong>Client/Server</strong></p>: FTP uses this model architecture. The client that uploads would be the host machine, and the server is a centralised storage space. The host machine is up/downloads whereas the server is designed to store the transferable data.
-    <p><strong>Port number</strong></p>: FTP uses port 21 - this is an active service that is reserved for the IP address of the target machine for this protocol. To make a basic web server we would also need Secure Shell (SSH - port 22) and Hypertext Transfer Protocol Secure (HTTPS - port 80).
-    <p><strong>Man-in-the-Middle</strong></p>: It must be noted that FTP can require authentication (i.e. user credentials) before permitting a host machine to access the files. However, this is a vulnerability as network traffic can be intercepted and the files can be read in plaintext. It is important to provide an encryption layer such as the Secure Socket Layer (SSL) or the Transport Layer Security (TLS) protocols to prevent a Man-in-the-Middle Attack.
-
+    <p><strong>GUI/Terminal</strong></p><p>: FTP servers can be navigated through the terminal or a Graphical User Interface.</p>
+    <p><strong>Client/Server</strong></p><p>: FTP uses this model architecture. The client that uploads would be the host machine, and the server is a centralised storage space. The host machine is up/downloads whereas the server is designed to store the transferable data.</p>
+    <p><strong>Port number</strong></p><p>: FTP uses port 21 - this is an active service that is reserved for the IP address of the target machine for this protocol. To make a basic web server we would also need Secure Shell (SSH - port 22) and Hypertext Transfer Protocol Secure (HTTPS - port 80).</p>
+    <p><strong>Man-in-the-Middle</strong></p><p>: It must be noted that FTP can require authentication (i.e. user credentials) before permitting a host machine to access the files. However, this is a vulnerability as network traffic can be intercepted and the files can be read in plaintext. It is important to provide an encryption layer such as the Secure Socket Layer (SSL) or the Transport Layer Security (TLS) protocols to prevent a Man-in-the-Middle Attack.</p>
 
     <h3>Enumeration</h3>
     <p>As always, we need to start with enumeration (gathering information) as it is the first and most critical step in penetration testing. This would involve gathering information about the target system by slowly mapping out key vulnerabilities - it’s making an assessment. Skipping this step can lead to missed vulnerabilities and wasted time.</p>
