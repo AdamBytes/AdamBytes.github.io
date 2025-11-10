@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Dancing</title>
+  <meta name="description" content="Craig's first blog post documenting his journey into cybersecurity and digital transformation." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <img src="../assets/images/profile.jpg" alt="Profile Picture" class="profile-pic" />
+    <h1>HTB: Dancing</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About Me</a>
+      <a href="../resume.html">Resume</a>
+      <a href="../htb.html">Hack The Box</a>
+    </nav>
+  </header>
 
+  <main class="single-post">
+    <h2>HTB: Dancing</h2>
+    <p><strong>Date:</strong> 11th October 2025</p>
+
+    <p><strong>Lab Objective:</strong> ‘Dancing’ is the third machine in the Start Point – Tier 0’ series on HTB. This lab focuses on SMB or the Server Message Block. An SMB is just one of the many protocols that a computer can use to communicate with other computers. When we knuckle down in the specifics, the SMB protocol allows for shared access to many network elements. Some of these elements include digital files, physical printers and serial ports between endpoints on a network.</p>
+
+    <h3>Important Considerations</h3>
+    <p><strong>Port</strong>: Port 445 TCP is reserved for SMB. It is used directly and there is no need for the NetBIOS layer.</p>
+    <p><strong>Windows</strong>: SMB is mainly used on a Windows machine because of its networking communication configuration and sharing properties, as well as with Active Directory. I’m not sure if it’s relevant at the moment, but due to the exploitation, many professionals still block this at the network firewall level.</p>
+    <p><strong>Exploitative</strong>: Port 445 and SMB are prone to being exploited, especially if a SMB-enabled ‘share’ has been accessed remotely and with the right credentials. This is dangerous a share can have read, write, create and remove permissions that can be misconfigured, especially if one is using a ‘guest account’ or ‘anonymous log-ons’ – think about the FTP issue.</p>
+   
+    <h3>Enumeration</h3>
+    <p>As always, we need to start with enumeration (gathering information) as it is the first and most critical step in penetration testing. This would involve gathering information about the target system by slowly mapping out key vulnerabilities - it’s making an assessment. Skipping this step can lead to missed vulnerabilities and wasted time.</p>
+
+    <p><strong>Task 1 - What does the 3-letter acronym SMB stand for?</strong></p>
+    <p>Answer: Server Message Block</p>
+    <p><code>sudo nmap -sV</code></p>
+    
+    <p><strong>Task 2 - What port does SMB use to operate at?</strong></p>
+    <p>Answer: 445</p>
+        
+    <p><strong>Task 3 -  What is the service name for port 445 that came up in our Nmap Scan?</strong></p>
+    <p>Answer: microsoft-ds</p>
+        
+    <p><strong>Task 4: What is the 'flag' or 'switch' that we can use with the smbclient utility to 'list' the available shares on Dancing?</strong></p>
+    <p>Answer: <code>-L</code></p>
+    <p>At this point it is worth mentioning that anytime we start engaging with a protocol, it is worth ensuring that our own system remains up to date so that we can easily exploit it as necessary. To install from terminal, run the following command: <code>sudo apt-get install smbclient</code></p>
+    <p>Speaking of exploitation: when smbclient connects to a host, it will check the level of authentication. Typically, it will ask you the password of your local username. By not determining a specific username, it will just revert to one’s local username, make sure you always run in a virtual machine. We can safely use the local machine name as we don’t know any other usernames and we don’t want to return an error – yet in an actual breach, we would have committed due diligence. We have two options available to us: anonymous and guest authentication.</p>
+
+   <h3>Establishing a foothold</h3>
+    
+    <p><strong>Task 5: How many shares are there on Dancing?</strong></p>
+    <p>Answer: 4</p>
+    <p>Shares: ADMIN$; C$; IPC$ and WorkShares. We will exploit each of these with the respective command: smbclient \\\\{targetIP}\\ADMIN$. We will also leave the password section blank.</p>
+        
+    <p><strong>Task 6: What is the name of the share we are able to access in the end with a blank password?</strong></p>
+    <p>Answer: <code>WorkShares</code></p>
+    
+    <p><strong>Task 7:What is the command we can use within the SMB shell to download the files we find?</strong></p>
+    <p>Answer: <code>get</code></p>
+    <p>Navigating the directory, we see there is Amy. J and James. P. Each of these folders have a txt file. We download each of these files to our downloads folder.</p>
+    <p><code>\> ls</code></p>
+    <p><code>\>cd Amy.J</code></p>
+    <p><code>\Amy.J\> get worknotes.txt</code><p>                                                                                                                                                                
+    
+    <p><strong>Task 8: Submit the Flag</strong></p>
+    <p>Answer: Following the instructions will give you the flag</p>
+    
+    <h3>Final Thoughts</h3>
+    
+    <ul>
+      <li>Make sure to have smbclient installed and the version is up to date</li>
+      <li>Always use the <code>help</code> command where necessary</li>
+      <li>Spend time reading documentation on what different commands do to get a holistic picture of the tool or service that you’re engaging with. </li>
+    </ul>
+
+  </main>
+</body>
+</html>
