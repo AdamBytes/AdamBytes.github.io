@@ -1,1 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Redeemer</title>
+  <meta name="description" content="Craig's first blog post documenting his journey into cybersecurity and digital transformation." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <img src="../assets/images/profile.jpg" alt="Profile Picture" class="profile-pic" />
+    <h1>HTB: Redeemer</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About Me</a>
+      <a href="../resume.html">Resume</a>
+      <a href="../htb.html">Hack The Box</a>
+    </nav>
+  </header>
+
+  <main class="single-post">
+    <h2>HTB: Redeemer</h2>
+    <p><strong>Date:</strong> 11 October 2025</p>
+
+    <p><strong>Lab Objective:</strong> ‘Redeemer’ is the fourth machine in the Start Point – Tier 0’ series on HTB. After completing the lab and spending some time researching, it became evident that this lab is to find the flag by exploiting a misconfigured Redis database server.</p>
+
+<h3>Important Considerations</h3>
+
+<ul>
+<li><p>Redis is an ‘In-Memory Database’. This database is volatile, stored as simple key-value pairs and is designed for caching. </p></il>
+<li><p>The key tool that we are using is a dedicated client for this service; <code>redis-cli</code></il>
+<li><p>The flag will be stored as a value inside a key</p></il>
+</ul>
+
+<h3>Enumeration</h3>
+<p>As always, we need to start with enumeration (gathering information) as it is the first and most critical step in penetration testing. This would involve gathering information about the target system by slowly mapping out key vulnerabilities - it’s making an assessment. Skipping this step can lead to missed vulnerabilities and wasted time.</p>
+
+<p>We will start with using Nmap: <code>nmap -p -sV {targetIP}</code>. When we use <code>-p-</code> we are scanning all 65535 TCP ports and with <code>-sV</code> we are detecting service versions.</p>
+
+
+  <p><strong>Task 1 - Which TCP port is open on the machine?</strong></p>
+  <p>Answer: 6379</p>
+  <p><code>sudo nmap -sV</code></p>
+    
+  <p><strong>Task 2 - Which service is running on the port that is open on the machine?</strong></p>
+  <p>Answer: redis</p>
+  <p>Redis is a REmote DIctionary Server that is an open-source advanced NoSQL key-value data store used as a database, cache and message broker. It is used for short term storage for fast retrieval.</p>
+     
+  <p><strong>Task 3 -  What type of database is Redis? Choose from the following options: (i) In-memory Database, (ii) Traditional Database</strong></p>
+  <p>Answer: In-memory Database</p>
+
+  <p>Redis runs server side software - the server listens for connections from clients, with a GUI or through the CLI.</p>
+  <p>The CLI is a tool that gives complete access and its functionalities.</p>
+  <p>The database is stored in the server’s RAM to enable fast data access. To interact with the server we need to install <code>sudo apt install redis-tools</code></p>
+
+  <p><strong>Task 4: Which command-line utility is used to interact with the Redis server? Enter the program name you would enter into the terminal without any arguments.</strong></p>
+  <p>Answer: <code>redis-cli</code></p>
+   
+   <h3>Establishing a foothold</h3>
+    
+  <p><strong>Task 5: Which flag is used with the Redis command-line utility to specify the hostname?</strong></p>
+  <p>Answer: <code>-h</code></p>
+ 
+  <p><strong>Task 6: Once connected to a Redis server, which command is used to obtain the information and statistics about the Redis server?</strong></p>
+  <p>Answer: <code>info</code></p>
+    
+  <p><strong>Task 7:What is the version of the Redis server being used on the target machine?</strong></p>
+  <p>Answer: 5.0.7</p>
+
+  <p><strong>Task 8: Which command is used to select the desired database in Redis?</strong></p>
+  <p>Answer: select</p>
+
+  <p><strong>Task 9: How many keys are present inside the database with index 0?</strong></p>
+  <p>Answer: 4</p>
+
+  <p><strong>Task 10: Which command is used to obtain all the keys in a database?</strong></p>
+  <p>keys *</p>
+  <p>Use the command <code>get</code> on each of the stored keys, and one of them will have a flag.</p>
+  <p><strong>Submit Root Flag</strong></p>
+  <p>Answer: follow the instructions</p>
+    
+   <h3>Final Thoughts</h3>
+      <ul>
+        <li>If a complex service is exposed, prioritize using its native client over generic tools</li>
+        <li>In a key-value store, the flags or critical data are often named obviously <code>(flag, password, secret)</code>. The exploitation path is simply discovery, selection, and retrieval.</li>
+        <li>The primary security lesson is that sensitive data services must never be accessible without authentication, even if they are only running on a non-standard port.. </li>
+      </ul>
+
+  </main>
+</body>
+</html>
+
 
