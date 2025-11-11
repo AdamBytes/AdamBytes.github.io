@@ -158,3 +158,19 @@ main {
 
 }
 
+/* --- Disclaimer Image Styling (Apes.png) --- */
+
+.disclaimer-image {
+    /* 1. Responsiveness: Ensures the image scales down on small screens */
+    max-width: 100%;
+    height: auto; 
+    
+    /* 2. Centering: Makes the block element (image) center itself */
+    display: block;
+    margin: 1.5rem auto; 
+    
+    /* 3. Style Guide Consistency (Copied from .post-body-image) */
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
