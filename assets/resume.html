@@ -3,106 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Resume</title>
+    <title>Craig Adamson - Digital Transformation Leader</title>
+    
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; }
-        header { border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-        h1 { margin: 0; font-size: 2em; }
-        h2 { border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 25px; margin-bottom: 10px; color: #333; }
-        h3 { margin-top: 15px; margin-bottom: 5px; font-size: 1.2em; }
-        .contact-info { margin-bottom: 15px; font-size: 0.9em; }
-        .job-title { font-weight: bold; }
-        .job-dates { font-style: italic; float: right; }
-        .section-content { margin-left: 20px; }
-        ul { list-style: disc; margin-top: 5px; padding-left: 20px; }
-        li { margin-bottom: 8px; }
+        /* Global Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f9;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        /* Header & Contact */
+        header {
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .contact-info {
+            font-size: 0.9em;
+            color: #555;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .contact-info a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Section Headings */
+        h2 {
+            font-size: 1.5em;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        /* Work Experience & Education */
+        h3 {
+            font-size: 1.2em;
+            color: #34495e;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .job-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 0;
+        }
+        .job-dates {
+            font-style: italic;
+            font-size: 0.9em;
+            color: #7f8c8d;
+            white-space: nowrap; /* Keep dates on one line */
+        }
+        
+        /* Lists and Details */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 20px 0;
+        }
+        li {
+            padding-left: 1.5em;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        li::before {
+            content: "•";
+            color: #3498db;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        .education p {
+            margin: 5px 0;
+        }
+        .skills-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+        }
+        .skills-list li {
+            background-color: #ecf0f1;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .skills-list li::before {
+            content: none;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        [cite_start]<h1>Craig Adamson</h1> [cite: 1]
+        <h1>Craig Adamson</h1>
         <div class="contact-info">
-            [cite_start]<p>adamcraigson@proton.me [cite: 3] | [cite_start]LinkedIn [cite: 2] | [cite_start]Credly [cite: 2] | [cite_start]MS Learn [cite: 3]</p>
+            <span>adamcraigson@proton.me</span>
+            <span>Remote (EU & ZAR) </span>
+            <a href="#">LinkedIn</a>
+            <a href="#">Credly</a>
+            <a href="#">MS Learn</a>
         </div>
     </header>
 
     <section>
-        [cite_start]<h2>Summary [cite: 4]</h2>
+        <h2>Summary</h2>
         <p>
-            [cite_start]Transformation and project leader with a background in education, technology integration, and organizational development. [cite: 5] [cite_start]I've led large-scale digital initiatives across multiple institutions, collaborated with senior leadership to implement strategic change, and managed cross-functional teams through complex transitions. [cite: 6] [cite_start]My work includes AI policy development, infrastructure upgrades, and the rollout of enterprise platforms like Microsoft 365 and SharePoint. [cite: 7] [cite_start]I bring a practical, people-focused approach to innovation, grounded in agile project management, stakeholder engagement, and staff enablement. [cite: 8]
+            Transformation and project leader with a background in education, technology integration, and organizational development[cite: 5]. I've led large-scale digital initiatives across multiple institutions, collaborated with senior leadership to implement strategic change, and managed cross-functional teams through complex transitions[cite: 6]. My work includes **AI policy development**, infrastructure upgrades, and the rollout of enterprise platforms like **Microsoft 365 and SharePoint**[cite: 7]. I bring a practical, people-focused approach to innovation, grounded in agile project management, stakeholder engagement, and staff enablement[cite: 8].
         </p>
     </section>
 
     <section>
-        [cite_start]<h2>Skills & Certifications [cite: 9]</h2>
+        <h2>Skills & Certifications</h2>
         
         <h3>Technical Skills</h3>
-        <p>Microsoft 365, SharePoint, Power Platform; AI Policy Development & Governance; [cite_start]Data Analysis & Reporting; [cite: 10] Learning Management Systems (LMS) & Student Information Systems (SIS); Curriculum & Training Design; [cite_start]Cloud-based Collaboration Tools (Teams, OneDrive, SharePoint) [cite: 11]</p>
+        <ul class="skills-list">
+            <li>Microsoft 365 [cite: 10]</li>
+            <li>SharePoint [cite: 10]</li>
+            <li>Power Platform [cite: 10]</li>
+            <li>AI Policy Development & Governance [cite: 10]</li>
+            <li>Data Analysis & Reporting [cite: 10]</li>
+            <li>LMS & SIS [cite: 11]</li>
+            <li>Curriculum & Training Design [cite: 11]</li>
+            <li>Cloud-based Collaboration Tools (Teams, OneDrive) [cite: 11]</li>
+        </ul>
 
         <h3>Professional Skills</h3>
-        <p>Agile & Lean Project Management; Risk Management & Regulatory Compliance; [cite_start]Strategic Planning & Communication; [cite: 12] Change Management & Organizational Development; Staff Training, Mentoring & Enablement; Stakeholder Engagement & Cross-functional Collaboration; [cite_start]Vendor Management & Procurement Strategy [cite: 13]</p>
+        <ul class="skills-list">
+            <li>Agile & Lean Project Management [cite: 12]</li>
+            <li>Risk Management & Regulatory Compliance [cite: 12]</li>
+            <li>Strategic Planning & Communication [cite: 12]</li>
+            <li>Change Management & Organizational Development [cite: 13]</li>
+            <li>Staff Training, Mentoring & Enablement [cite: 13]</li>
+            <li>Stakeholder Engagement & Cross-functional Collaboration [cite: 13]</li>
+            <li>Vendor Management & Procurement Strategy [cite: 13]</li>
+        </ul>
 
         <h3>Certifications</h3>
-        <p>IT Management; Digital Transformation Strategy; Agile Project Management; Microsoft Certified: Azure AI Fundamentals; Microsoft Certified: Power Platform Fundamentals; [cite_start]Microsoft Certified Educator [cite: 14, 15]</p>
+        <p>IT Management; Digital Transformation Strategy; Agile Project Management[cite: 14]; Microsoft Certified: Azure AI Fundamentals[cite: 14]; Microsoft Certified: Power Platform Fundamentals[cite: 14]; Microsoft Certified Educator [cite: 15]</p>
     </section>
 
+    <hr>
+
     <section>
-        [cite_start]<h2>Work Experience [cite: 16]</h2>
+        <h2>Work Experience</h2>
 
         <div>
-            <h3>Head of Digital Transformation | [cite_start]South African Jewish Board of Education</h3> [cite: 17]
-            [cite_start]<p class="job-dates">January 2022 - April 2025 [cite: 17]</p>
-            <ul class="section-content">
-                [cite_start]<li>Led institutional change across the school network, mentoring teams and managing training for up to 400 staff members. [cite: 19]</li>
-                [cite_start]<li>Successfully adopted the MIE Expert program into 8 of our 10 schools and had a retention rate of 70% for four years. [cite: 20]</li>
-                [cite_start]<li>Used the Microsoft Education Transformation Framework focusing on Leadership & Policy, Teaching & Learning and Student & School Success. [cite: 21]</li>
-                [cite_start]<li>Flattened vertical hierarchy structures by identifying key members in each school to form part of a cohort to better drive change management. [cite: 22]</li>
-                [cite_start]<li>Researched, vetted and analysed third-party vendors on educational products and implemented a curriculum for coding and robotics in four primary schools. [cite: 23]</li>
-                [cite_start]<li>Spearheaded the development and coordination of Professional Learning Communities, including the creation and adoption of an AI Framework and Policy. [cite: 24]</li>
-                [cite_start]<li>Collaborated with C-Suite senior leadership to develop and implement a multi-phase digital transformation vision for staff upskilling and stakeholder benefit. [cite: 25]</li>
-                [cite_start]<li>Oversaw the procurement of STEAM equipment and managed the upgrade of classroom and computer lab facilities. [cite: 26]</li>
-                [cite_start]<li>Drove the implementation of new educational spaces and guided the adoption of robotics and coding curricula. [cite: 27]</li>
+            <div class="job-header">
+                <h3 class="job-title">Head of Digital Transformation | South African Jewish Board of Education</h3>
+                <span class="job-dates">January 2022 - April 2025 [cite: 17]</span>
+            </div>
+            <ul>
+                <li>Led institutional change across the school network, mentoring teams and managing training for up to 400 staff members[cite: 19].</li>
+                <li>Successfully adopted the **MIE Expert program** into 8 of 10 schools with a 70% retention rate for four years[cite: 20].</li>
+                <li>Spearheaded the development and coordination of Professional Learning Communities, including the creation and adoption of an **AI Framework and Policy**[cite: 24].</li>
+                <li>Collaborated with C-Suite senior leadership to develop and implement a multi-phase digital transformation vision[cite: 25].</li>
+                <li>Oversaw the procurement of STEAM equipment and managed the upgrade of classroom and computer lab facilities[cite: 26].</li>
+                <li>Used the Microsoft Education Transformation Framework focusing on Leadership & Policy, Teaching & Learning and Student & School Success[cite: 21].</li>
             </ul>
         </div>
 
         <div>
-            <h3>Director of EdTech & Innovation | [cite_start]SABJE (King David High School)</h3> [cite: 28]
-            [cite_start]<p class="job-dates">February 2020 - April 2025 [cite: 28]</p>
-            <ul class="section-content">
-                [cite_start]<li>Redeveloped the grade 8+9 curriculum for all elective choices into more robust and cross-curricular opportunities with the United Nations Standard Development Goals and ISTE standards as the framework. [cite: 30]</li>
-                [cite_start]<li>Instituted and developed an internal AI professional learning community that focused on AI policy and AI curriculum frameworks. [cite: 31]</li>
-                [cite_start]<li>Taught coding and robotics with the Lego Spike prime as an introductory course to grade 8 students in 2022 as part of upscaling STEAM initiatives. [cite: 33]</li>
-                [cite_start]<li>Introduced AI fundamentals to grade 9 students as a subject choice offering (computer vision, machine learning fundamentals, creating a machine that could read a person's mood through facial recognition). [cite: 34]</li>
-                [cite_start]<li>Led institutional-wide digital transformations, including the successful transition to remote learning and online examinations for the flagship school during lockdown. [cite: 35]</li>
-                [cite_start]<li>Oversaw the development and consulted on the construction of two new educational spaces and a fabrication unit. [cite: 36]</li>
-                [cite_start]<li>Provided strategic guidance as a member of the IT Steering Committee, overseeing governance, policy, and infrastructure improvements. [cite: 37, 38]</li>
-                [cite_start]<li>Managed the rollout of new digital platforms, including online parent-teacher evenings and a Learner Management System, Content Management Systems and proctoring software. [cite: 39]</li>
-                [cite_start]<li>Streamlined internal communication practices using Microsoft Teams and Office 365. [cite: 40]</li>
+            <div class="job-header">
+                <h3 class="job-title">Director of EdTech & Innovation | SABJE (King David High School)</h3>
+                <span class="job-dates">February 2020 - April 2025 [cite: 28]</span>
+            </div>
+            <ul>
+                <li>Led institutional-wide digital transformations, including the successful transition to **remote learning and online examinations** for the flagship school during lockdown[cite: 35].</li>
+                <li>Instituted and developed an internal **AI professional learning community** focusing on AI policy and curriculum frameworks[cite: 31].</li>
+                <li>Introduced **AI fundamentals** to grade 9 students as a subject choice offering, including computer vision and machine learning fundamentals[cite: 34].</li>
+                <li>Redeveloped the grade 8+9 curriculum for elective choices using the United Nations Standard Development Goals and ISTE standards as the framework[cite: 30].</li>
+                <li>Managed the rollout of new digital platforms, including online parent-teacher evenings, a Learner Management System, and proctoring software[cite: 39].</li>
             </ul>
         </div>
 
         <div>
-            <h3>Senior English Teacher | [cite_start]SABJE (King David High School)</h3> [cite: 41]
-            [cite_start]<p class="job-dates">July 2016 - December 2022 [cite: 41]</p>
-            <ul class="section-content">
-                [cite_start]<li>Taught grades 8-12 with a focus on grade 11+12 students to prepare them for the National Senior Certificate (IEB). [cite: 42]</li>
-                [cite_start]<li>Taught the English Further Studies (Advanced Programme) curriculum, focusing on modernist poetry and South African literature. [cite: 43]</li>
-                [cite_start]<li>Acted as a mentor for new teachers, enabling them with support and guiding them on best educational practice. [cite: 44]</li>
-                [cite_start]<li>Prepared international students for the SAT to support American university admissions. [cite: 45]</li>
-                [cite_start]<li>Co-created a new internal learning and curriculum textbook for students in collaboration with the Head of Department. [cite: 46]</li>
-                [cite_start]<li>Served as a sub-examiner for three years and a marker for ten years for the Independent Examination Board of South Africa (IEB). [cite: 47]</li>
-                [cite_start]<li>Trained new teachers and moderated national exams, ensuring the integrity of the marking process. [cite: 48]</li>
+            <div class="job-header">
+                <h3 class="job-title">Senior English Teacher | SABJE (King David High School)</h3>
+                <span class="job-dates">July 2016 - December 2022 [cite: 41]</span>
+            </div>
+            <ul>
+                <li>Taught grades 8-12 with a particular focus on grade 11+12 students for the National Senior Certificate (IEB)[cite: 42].</li>
+                <li>Served as a sub-examiner for three years and a marker for ten years for the Independent Examination Board of South Africa (IEB)[cite: 47].</li>
+                <li>Acted as a mentor for new teachers, guiding them on best educational practice[cite: 44].</li>
             </ul>
         </div>
     </section>
 
-    <section>
-        [cite_start]<h2>Education [cite: 49]</h2>
-        <div class="section-content">
-            <p><strong>Postgraduate Certificate in Education (English Literature & History)</strong> | [cite_start]Rhodes University, Grahamstown, South Africa [cite: 50, 51]</p>
-            <p><strong>Bachelor of Arts: Political Theory & International Relations</strong> | [cite_start]Rhodes University, Grahamstown, South Africa [cite: 50]</p>
-        </div>
+    <hr>
+
+    <section class="education">
+        <h2>Education</h2>
+        <p><strong>Postgraduate Certificate in Education (English Literature & History)</strong> | Rhodes University, Grahamstown, South Africa [cite: 50, 51]</p>
+        <p><strong>Bachelor of Arts: Political Theory & International Relations</strong> | Rhodes University, Grahamstown, South Africa [cite: 50]</p>
     </section>
 
 </body>
