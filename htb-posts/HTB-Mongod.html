@@ -1,1 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Redeemer</title>
+  <meta name="description" content="Craig's first blog post documenting his journey into cybersecurity and digital transformation." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <img src="../assets/images/profile.jpg" alt="Profile Picture" class="profile-pic" />
+    <h1>HTB: Mongod</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About Me</a>
+      <a href="../resume.html">Resume</a>
+      <a href="../htb.html">Hack The Box</a>
+    </nav>
+  </header>
 
+  <main class="single-post">
+    <h2>HTB: Mongod</h2>
+      <p><strong>Date:</strong> 5 January 2026</p>
+
+      <p><strong>Lab Objective:</strong> ‘Mongod’ is the seventh machine in the Start Point – Tier 0’ series on HTB that comes with VIP access.</p>
+      <p>In this case, we explore MongoDB. MongoDB is a document-oriented NoSQL database and has the following hierarchy: databases; collections and documents. For simplicity sake, databases are organised into collections which contain documents. These documents contain data in the format of strings, numbers, dates in a JSON-like format. </p>
+
+    <h3>Important Considerations</h3>
+      <p>I will make it very apparent that I used the Walkthrough extensively throughout this lab as I had no prior knowledge of MongoDB nor its system access level and the kind of exploits that could take place. I detail my observation and self-learning process under final thoughts at the end of this write-up.</p>
+      <p>What is important to understand is that misconfiguration typically leads to vulnerabilities in most environments. In this case, we are taking advantage of a misconfigured system to gain an anonymous login and then retrieve the respective flag. </p>
+      <p>I learnt that the ‘Mongosh’ command line utility was very important here. Below are the steps to enumerate and then take a foothold in the server. </p>
+
+    <h3>Enumeration</h3>
+      <p>As always, we need to start with enumeration (gathering information) as it is the first and most critical step in penetration testing. This would involve gathering information about the target system by slowly mapping out key vulnerabilities - it’s making an assessment. Skipping this step can lead to missed vulnerabilities and wasted time. In this case, we start by using Nmap.</p>
+      <p>With the help of the walkthrough, it was found that we had to use <code>nmap -p- --min-rate-1000 -sV {TARGET-IP}</code></p>
+      <p>We add the extra conditionals to the command to make sure that it scans ports 0-65535; determines the versions of the running services and the minimum number of packets that Nmap should send per second. </p>
+
+
+  <p><strong>Task 1: How many TCP ports are open on the machine?</strong></p>
+  <p>Answer: 2</p>
+ 
+  <p><strong>Task 2: Which service is running on Port 27017 of the remote host?</strong></p>
+  <p>Answer: MongoDB 3.6.8</p>
+       
+  <p><strong>Task 3: What type of database is MongoDB (ChooseL SQL or NoSQL)</strong></p>
+  <p>Answer: NoSQL</p>
+
+  <p><strong>Task 4: What command is used to launch the interactive MongoDB shell from the terminal?</strong></p>
+  <p>Answer: <code>mongosh</code></p>
+     
+  <p><strong>Task 5: What is the command used for listing all the databases present on the MongoDB server? (No need to include a training)</strong></p>
+  <p>Answer: <code>show dbs</code></p>
+ 
+  <p><strong>Task 6: Task 6: What is the command used for listing out the collections in a database?</strong></p>
+  <p>Answer: <code>show collections</code></p>
+    
+  <p><strong>Task 7: What command is used to dump the content of all the documents within the collection named <code>flag</code>?</strong></p>
+  <p>Answer: <copde>db.flag.find()</copde></p>
+
+  <p><strong>Task 8: Submit the Flag</strong></p>
+  <p>Answer: Please follow the instructions to find the respective flag. </p>
+
+  
+   <h3>Final Thoughts</h3>
+      <ul>
+        <li>I didn’t enjoy the feeling of not knowing what I was doing and a reliance on the guide walkthrough. </li>
+        <li>However, I took it as a learning opportunity to be exposed to something new. I will not always know everything all the time, especially so early on in my learning. </li>
+        <li>I thought about the ways in which I would think about how to engage more meaningfully on areas or labs that I will have no knowledge on and there are a couple steps I can take to assist me. </li>
+        <li>The final lesson I learnt today was that if a service is connected to the internet with the default settings, no ‘hacking’ is required, only the right client tool.</li>
+      </ul>
+    <p>Enumeration is important, it lets me understand the respective services runnong on a host and instead of feeling overwhemled, I should consider using altenrative sources like Google or committ to doing some service research. I should also spend some time making sold and valid attempts in documenting the process and how I deal and engage with it meaningfully.</p>
+
+  </main>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Redeemer</title>
+  <meta name="description" content="Craig's first blog post documenting his journey into cybersecurity and digital transformation." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <img src="../assets/images/profile.jpg" alt="Profile Picture" class="profile-pic" />
+    <h1>HTB: Redeemer</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About Me</a>
+      <a href="../resume.html">Resume</a>
+      <a href="../htb.html">Hack The Box</a>
+    </nav>
+  </header>
+
+  <main class="single-post">
+    <h2>HTB: Redeemer</h2>
+    <p><strong>Date:</strong> 11 October 2025</p>
+
+    <p><strong>Lab Objective:</strong> ‘Redeemer’ is the fourth machine in the Start Point – Tier 0’ series on HTB. After completing the lab and spending some time researching, it became evident that this lab is to find the flag by exploiting a misconfigured Redis database server.</p>
+
+<h3>Important Considerations</h3>
+
+<ul>
+<li><p>Redis is an ‘In-Memory Database’. This database is volatile, stored as simple key-value pairs and is designed for caching. </p></il>
+<li><p>The key tool that we are using is a dedicated client for this service; <code>redis-cli</code></il>
+<li><p>The flag will be stored as a value inside a key</p></il>
+</ul>
+
+<h3>Enumeration</h3>
+<p>As always, we need to start with enumeration (gathering information) as it is the first and most critical step in penetration testing. This would involve gathering information about the target system by slowly mapping out key vulnerabilities - it’s making an assessment. Skipping this step can lead to missed vulnerabilities and wasted time.</p>
+
+<p>We will start with using Nmap: <code>nmap -p -sV {targetIP}</code>. When we use <code>-p-</code> we are scanning all 65535 TCP ports and with <code>-sV</code> we are detecting service versions.</p>
+
+
+  <p><strong>Task 1 - Which TCP port is open on the machine?</strong></p>
+  <p>Answer: 6379</p>
+  <p><code>sudo nmap -sV</code></p>
+    
+  <p><strong>Task 2 - Which service is running on the port that is open on the machine?</strong></p>
+  <p>Answer: redis</p>
+  <p>Redis is a REmote DIctionary Server that is an open-source advanced NoSQL key-value data store used as a database, cache and message broker. It is used for short term storage for fast retrieval.</p>
+     
+  <p><strong>Task 3 -  What type of database is Redis? Choose from the following options: (i) In-memory Database, (ii) Traditional Database</strong></p>
+  <p>Answer: In-memory Database</p>
+
+  <p>Redis runs server side software - the server listens for connections from clients, with a GUI or through the CLI.</p>
+  <p>The CLI is a tool that gives complete access and its functionalities.</p>
+  <p>The database is stored in the server’s RAM to enable fast data access. To interact with the server we need to install <code>sudo apt install redis-tools</code></p>
+
+  <p><strong>Task 4: Which command-line utility is used to interact with the Redis server? Enter the program name you would enter into the terminal without any arguments.</strong></p>
+  <p>Answer: <code>redis-cli</code></p>
+   
+   <h3>Establishing a foothold</h3>
+    
+  <p><strong>Task 5: Which flag is used with the Redis command-line utility to specify the hostname?</strong></p>
+  <p>Answer: <code>-h</code></p>
+ 
+  <p><strong>Task 6: Once connected to a Redis server, which command is used to obtain the information and statistics about the Redis server?</strong></p>
+  <p>Answer: <code>info</code></p>
+    
+  <p><strong>Task 7:What is the version of the Redis server being used on the target machine?</strong></p>
+  <p>Answer: 5.0.7</p>
+
+  <p><strong>Task 8: Which command is used to select the desired database in Redis?</strong></p>
+  <p>Answer: select</p>
+
+  <p><strong>Task 9: How many keys are present inside the database with index 0?</strong></p>
+  <p>Answer: 4</p>
+
+  <p><strong>Task 10: Which command is used to obtain all the keys in a database?</strong></p>
+  <p>keys *</p>
+  <p>Use the command <code>get</code> on each of the stored keys, and one of them will have a flag.</p>
+  <p><strong>Submit Root Flag</strong></p>
+  <p>Answer: follow the instructions</p>
+    
+   <h3>Final Thoughts</h3>
+      <ul>
+        <li>If a complex service is exposed, prioritize using its native client over generic tools</li>
+        <li>In a key-value store, the flags or critical data are often named obviously <code>(flag, password, secret)</code>. The exploitation path is simply discovery, selection, and retrieval.</li>
+        <li>The primary security lesson is that sensitive data services must never be accessible without authentication, even if they are only running on a non-standard port.. </li>
+      </ul>
+
+  </main>
+</body>
+</html>
