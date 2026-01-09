@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Preignition</title>
+  <meta name="description" content="Craig's first blog post documenting his journey into cybersecurity and digital transformation." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <img src="../assets/images/profile.jpg" alt="Profile Picture" class="profile-pic" />
+    <h1>HTB: Preignition</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About Me</a>
+      <a href="../resume.html">Resume</a>
+      <a href="../htb.html">Hack The Box</a>
+    </nav>
+  </header>
 
+  <main class="single-post">
+    <h2>HTB: Preignition</h2>
+    <p><strong>Date:</strong> 17th October 2025</p>
+
+    <p><strong>Lab Objective:</strong>  ‘Preignition’ is the sixth machine in the ‘Starting Point - Tier 0’ lab series by Hack the Box. This box focuses on fundamental web enumeration and the discovery of administrative interfaces through directory brute-forcing. It's an introduction to tools like <code>gobuster</code> and the concept of "low-hanging fruit" such as default login credentials.</p>
+   
+    <h3>Enumeration</h3>
+    <p>As always, we need to start with enumeration (gathering information) as it is the first and most critical step in penetration testing. This would involve gathering information about the target system by slowly mapping out key vulnerabilities - it’s making an assessment. Skipping this step can lead to missed vulnerabilities and wasted time. In this case, we start by using Nmap.</p>
+
+    <p>We start by scanning the target IP address to identify open ports and services: nmap -sV {target_IP}</p>
+    <p>The scan reveals a single open port: port 80 (HTTP) and it is running nginx 1.14.2</p>
+    <p>We then proceed to navigate to http://{target_IP} in the browser and it shows a standard Nginx "Welcome" page. There are no visible links or clues on the landing page, so we need to look for hidden files or directories.</p>
+    <p>To find hidden paths, we use gobuster. This was my first introduction to the tool and had to use the walkthrough to better understand what was required. Overall, the general principle is to use a common wordlist and look specifically for .php files or other webfiles not listed, as this is a common extension for administrative portals : <code>gobuster dir -u http://10.129.20.25 -w /usr/share/wordlists/dirb/common.txt -x php</code></p>
+    <p>We are given the result: /admin.php (Status: 200), succesfully identifying it as a login page</p>
+    <p>To access the admin panel we navigate to http://{target_IP}/admin.php and that brings up a simple login form requesting username and password. </p>
+    <p>Before trying complex exploits, it is standard practice to test for default credentials. Often, "admin/admin" is left as the default configuration.</p>
+    <ul>
+      <li>Username: admin</li>
+      <li>Password: admin</li>
+    </ul>
+    <p>Once logged in, the page refreshes to show the internal dashboard. The flag is displayed clearly on the screen.</p>
+
+
+    
+    <p><strong>Task 1 - What is the common name for directory brute-forcing?</strong></p>
+    <p>Answer: dir busting</p>
+   
+    
+    <p><strong>Task 2 - What is the switch to perform a service version scan with nmap?</strong></p>
+    <p>Answer: -sV</p>
+        
+    <p><strong>Task 3 -  WWhat is the service running on port 80?</strong></p>
+    <p>Answer: http</p>
+        
+    <p><strong>Task 4: What is the version of the Nginx server?</strong></p>
+    <p>Answer: 1.14.2</p>
+   
+    <p><strong>Task 5: Which gobuster switch is used to specify we are looking for directories?</strong></p>
+    <p>Answer: dir</p>
+           
+    <p><strong>Task 6: Which gobuster switch is used to specify the file extensions to look for?</strong></p>
+    <p>Answer: <code>-x</code></p>
+    
+    <p><strong>Task 7:What is the HTTP status code for a successful request?</strong></p>
+    <p>Answer: 200</p>
+                                                                                                                 
+    <p><strong>Task 8: Submit the Flag</strong></p>
+    <p>Answer: Following the instructions will give you the flag</p>
+    
+    <h3>Final Thoughts</h3>
+        <ul>
+      <li>This lab shows that you don't always need a fancy exploit to get in. Simply looking for hidden folders (fuzzing) and trying common passwords like "admin" is often enough to find a way inside a system.</li>
+      <li>Just because a login page isn't linked on the main website doesn't mean it's safe. True security comes from using strong, unique passwords, not just hoping that no one finds your "secret" admin page.</li>
+        </ul>
+
+  </main>
+</body>
+</html>
