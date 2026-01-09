@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Explosion</title>
+  <meta name="description" content="Craig's first blog post documenting his journey into cybersecurity and digital transformation." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <img src="../assets/images/profile.jpg" alt="Profile Picture" class="profile-pic" />
+    <h1>HTB: Redeemer</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About Me</a>
+      <a href="../resume.html">Resume</a>
+      <a href="../htb.html">Hack The Box</a>
+    </nav>
+  </header>
 
+  <main class="single-post">
+    <h2>HTB: Explosion</h2>
+    <p><strong>Date:</strong> 17 October 2025</p>
+
+    <p><strong>Lab Objective:</strong> ‘Explosion’ is the fifth machine in the ‘Starting Point - Tier 0’ lab series by Hack the Box. Explosion specifically sits with understanding penetration fundamentals - especially if they are misconfigured. </p>
+    <p>In this case, we are looking at the Remote Desktop Protocol Specifically. By taking advantage of a misconfigured system, a threat actor can fully compromise the entire system. </p>
+
+    <h3>Important Considerations</h3>
+    <p>RDP: Remote Desktop Protocol - allows for team members to remotely connect to other hosts. </p>
+    <p>Ports: 3389 TCP and 3389 UDP.</p>
+    <p>Telnet: Outdated tool, often unsecure. Left for SSH.</p>
+    <p>SSH: Secure Shell Protocol. Added layers of authentication and encryption to the base communication model.</p>
+    <p>Use case: patch delivery, file transfers, log transfers and remote management. </p>
+
+<h3>Enumeration</h3>
+<p>As always, we need to start with enumeration (gathering information) as it is the first and most critical step in penetration testing. This would involve gathering information about the target system by slowly mapping out key vulnerabilities - it’s making an assessment. Skipping this step can lead to missed vulnerabilities and wasted time.</p>
+
+<p>We will start with using Nmap: <code>nmap -p -sV {targetIP}</code>. When we use <code>-p-</code> we are scanning all 65535 TCP ports and with <code>-sV</code> we are detecting service versions.</p>
+<p>Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-09-17 16:03 CDT
+Nmap scan report for 10.129.226.40
+Host is up (0.0084s latency).
+Not shown: 996 closed tcp ports (reset)
+PORT     STATE SERVICE       VERSION
+135/tcp  open  msrpc         Microsoft Windows RPC
+139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp  open  microsoft-ds?
+3389/tcp open  ms-wbt-server Microsoft Terminal Services
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+</p>
+
+
+  <p><strong>Task 1 - What does the 3-letter acronym RDP stand for?</strong></p>
+  <p>Answer: Remote Desktop Protocol.</p>
+    
+  <p><strong>Task 2 - What is the 3-letter acronym that refers to interaction with the host through the command line interface?</strong></p>
+  <p>Answer: CLI</p>
+       
+  <p><strong>Task 3 -  What about graphical user interface interactions?</strong></p>
+  <p>Answer: GUI</p>
+
+  <p><strong>Task 4 - What is the name of an old remote access tool that came without encryption by default and listens on TCP port 23?</strong></p>
+  <p>Answer: <code>Telnet</code></p>
+   
+  <p><strong>Task 5 - What is the name of the service running on port 3389 TCP?</strong></p>
+  <p>Answer: <code>ms-wbt-server</code></p>
+ 
+  <p><strong>Task 6 - What is the switch used to specify the target host’s IP address when using xfreerdp?</strong></p>
+  <p>Answer: <code>/v:</code></p>
+    
+  <p><strong>Task 7 - :What username successfully returns a desktop projection to us with a blank password?</strong></p>
+  <p>Answer: Administrator</p>
+
+  <p><strong>Task 8 - Submit root Flag</strong></p>
+  <p>Answer: Follow the above steps to achieve the flag.</p>
+   
+   <h3>Final Thoughts</h3>
+  <p>A fun exericse that demonstrated taking advantage of an unsecured system, effectively navigating a remote desktop environment to search for the keys - was a nice exposure point.</p>
+
+  </main>
+</body>
+</html>
