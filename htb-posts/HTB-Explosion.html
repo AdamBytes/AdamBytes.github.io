@@ -37,19 +37,19 @@
 <p>As always, we need to start with enumeration (gathering information) as it is the first and most critical step in penetration testing. This would involve gathering information about the target system by slowly mapping out key vulnerabilities - it’s making an assessment. Skipping this step can lead to missed vulnerabilities and wasted time.</p>
 
 <p>We will start with using Nmap: <code>nmap -p -sV {targetIP}</code>. When we use <code>-p-</code> we are scanning all 65535 TCP ports and with <code>-sV</code> we are detecting service versions.</p>
-<p>Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-09-17 16:03 CDT
-Nmap scan report for 10.129.226.40
-Host is up (0.0084s latency).
-Not shown: 996 closed tcp ports (reset)
-PORT     STATE SERVICE       VERSION
-135/tcp  open  msrpc         Microsoft Windows RPC
-139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
-445/tcp  open  microsoft-ds?
-3389/tcp open  ms-wbt-server Microsoft Terminal Services
-Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
-</p>
-
-
+<blockquote>
+  <p>Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-09-17 16:03 CDT</p>
+  <p>Nmap scan report for 10.129.226.40</p>
+  <p>Host is up (0.0084s latency).</p>
+  <p>Not shown: 996 closed tcp ports (reset)</p>
+  <p>PORT     STATE SERVICE       VERSION</p>
+  <p>135/tcp  open  msrpc         Microsoft Windows RPC/p>
+  <p>139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn</p>
+  <p>445/tcp  open  microsoft-ds?</p>
+  <p>3389/tcp open  ms-wbt-server Microsoft Terminal Services</p>
+  <p>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows/p>
+</blockquote>
+   
   <p><strong>Task 1 - What does the 3-letter acronym RDP stand for?</strong></p>
   <p>Answer: Remote Desktop Protocol.</p>
     
