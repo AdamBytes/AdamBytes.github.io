@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Synced</title>
+  <meta name="description" content="Craig's documentation of the Synced machine on Hack The Box, focusing on Rsync exploitation." />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <header>
+    <img src="../assets/images/profile.jpg" alt="Profile Picture" class="profile-pic" />
+    <h1>HTB: Synced</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About Me</a>
+      <a href="../resume.html">Resume</a>
+      <a href="../htb.html">Hack The Box</a>
+    </nav>
+  </header>
 
+  <main class="single-post">
+    <h2>HTB: Synced</h2>
+    <p><strong>Date:</strong> 13th September 2025</p>
+
+    <p><strong>Lab Objective:</strong> ‘Synced’ is a Tier 0 machine in the Starting Point series. This lab focuses on the Rsync protocol. Rsync (Remote Sync) is a utility for efficiently transferring and synchronizing files between a computer and a storage drive and across networked computers by comparing the modification times and sizes of files.</p>
+
+    <h3>Important Considerations</h3>
+    <p><strong>Port</strong>: Port 873 TCP is the default port used by Rsync. It can be used for local and remote file-copying.</p>
+    <p><strong>Configuration</strong>: Rsync uses "modules" which are essentially directory shares. These can be configured with or without authentication. In a professional environment, allowing anonymous access to these modules can lead to significant data leaks.</p>
+    <p><strong>Security</strong>: Similar to the Telnet issues found in Meow, Rsync does not provide encryption by default during transport unless it is tunneled through a protocol like SSH. If misconfigured, an attacker can list, read, and sometimes write files to the server without a password.</p>
+    
+    <h3>Enumeration</h3>
+    <p>As always, we need to start with enumeration. This involves gathering information about the target system to identify what services are exposed. Skipping this step often leads to rabbit holes and wasted time.</p>
+
+    
+
+    <p><strong>Task 1 - What is the default port for rsync?</strong></p>
+    <p>Answer: 873</p>
+    <p><code>sudo nmap -sV [TARGET_IP]</code></p>
+    
+    <p><strong>Task 2 - How many TCP ports are open on the remote host?</strong></p>
+    <p>Answer: 1</p>
+        
+    <p><strong>Task 3 - What is the protocol version used by rsync on the remote host?</strong></p>
+    <p>Answer: 31</p>
+        
+    <p><strong>Task 4 - What is the command used to list the modules available on the target?</strong></p>
+    <p>Answer: <code>rsync --list-only</code></p>
+    <p>To interact with this service, ensure you have the rsync client installed on your local machine. You can install it using: <code>sudo apt install rsync</code>.</p>
+
+   <h3>Establishing a foothold</h3>
+    
+    <p><strong>Task 5: What is the name of the share (module) that is available on the target?</strong></p>
+    <p>Answer: <code>public</code></p>
+    <p>I used the command <code>rsync --list-only [TARGET_IP]::</code> to see what was available. The double colon <code>::</code> is used to contact the rsync daemon directly.</p>
+        
+    <p><strong>Task 6: What is the command to list the contents of the 'public' share?</strong></p>
+    <p>Answer: <code>rsync [TARGET_IP]::public</code></p>
+    
+    <p><strong>Task 7: What is the name of the file found inside the share?</strong></p>
+    <p>Answer: <code>flag.txt</code></p>
+    <p>Once the file was identified, I needed to "sync" it to my local machine to read it. I used the command:</p>
+    <p><code>rsync [TARGET_IP]::public/flag.txt .</code></p>
+    <p>The <code>.</code> indicates that I want the file copied to my current working directory.</p>
+                                                                                                                                                                    
+    <p><strong>Task 8: Submit the Flag</strong></p>
+    <p>Answer: [The hash found inside flag.txt]</p>
+    
+    <h3>Final Thoughts</h3>
+        <ul>
+      <li>Rsync is a powerful tool, but dangerous when the "Anonymous" login is left enabled on sensitive directories.</li>
+      <li>The <code>--list-only</code> flag is your best friend when enumerating unknown rsync targets.</li>
+      <li>Always check for "modules" before trying to guess file paths.</li>
+    </ul>
+
+  </main>
+</body>
+</html>
