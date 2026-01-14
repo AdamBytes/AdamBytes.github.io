@@ -42,7 +42,6 @@ header {
 nav {
   margin-top: 1rem;
 }
-
 nav a {
   margin: 0 1rem;
   font-weight: bold;
@@ -159,33 +158,25 @@ main {
 }
 
 /* --- Disclaimer Image Styling (Apes.png) --- */
-
 .disclaimer-image {
     /* 1. Responsiveness: Ensures the image scales down on small screens */
     max-width: 100%;
     height: auto; 
-    
     /* 2. Centering: Makes the block element (image) center itself */
     display: block;
     margin: 1.5rem auto; 
-    
     /* 3. Style Guide Consistency (Copied from .post-body-image) */
     border-radius: 8px;
     box-shadow: 0 0 6px rgba(0,0,0,0.1);
 }
-
-/* Add this rule to your assets/css/style.css file */
-
 .active-nav-link {
     /* Example 1: Bold text */
     font-weight: 900 !important; 
-    
     /* Example 2: Change text color to a darker tone */
     color: #004a80 !important; /* A darker, more distinct blue */
-    
     /* Example 3: Add an under-bar for visual emphasis */
     border-bottom: 2px solid #004a80;
     padding-bottom: 5px; /* Adds space between text and line */
 }
-/* The !important is used here because your existing 'nav a' rules might override simple changes. */
+
 
