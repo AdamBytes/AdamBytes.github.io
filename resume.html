@@ -6,7 +6,7 @@
     <title>Craig Adamson - Digital Transformation Leader</title>
     
     <style>
-        /* --- Theme Variables (Set to Dark Mode) --- */
+        /* --- Theme Variables (Dark Mode) --- */
         :root {
             --bg-color: #121212;
             --card-bg: #1e1e1e;
@@ -22,7 +22,6 @@
 
         /* --- Global Styles --- */
         body {
-            /* System font stack: Clean, fast, and no external dependencies */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             line-height: 1.6;
             color: var(--text-color);
@@ -74,29 +73,20 @@
             margin-bottom: 15px;
         }
 
-        /* --- Work Experience & Education --- */
         h3 {
             font-size: 1.2em;
             color: var(--heading-color);
             margin-top: 20px;
             margin-bottom: 5px;
         }
+        
         .job-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
         }
-        .job-title {
-            font-weight: bold;
-            font-size: 1.1em;
-            margin: 0;
-        }
-        .job-dates {
-            font-style: italic;
-            font-size: 0.9em;
-            color: var(--secondary-text);
-            white-space: nowrap;
-        }
+        .job-title { font-weight: bold; font-size: 1.1em; margin: 0; }
+        .job-dates { font-style: italic; font-size: 0.9em; color: var(--secondary-text); white-space: nowrap; }
         
         /* --- Lists and Details --- */
         ul { list-style: none; padding: 0; margin: 10px 0 20px 0; }
@@ -115,10 +105,12 @@
         }
 
         .skills-list {
+            list-style: none;
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             padding: 0;
+            margin: 10px 0 20px 0;
         }
         .skills-list li {
             background-color: var(--skill-bg);
@@ -126,12 +118,10 @@
             border-radius: 4px;
             font-size: 0.9em;
             color: var(--text-color);
-            transition: background-color 0.2s;
         }
         .skills-list li::before { content: none; }
-        .skills-list li:hover { background-color: var(--skill-hover); }
 
-        .cert-link { text-decoration: none; color: inherit; }
+        .cert-link { text-decoration: none; color: inherit; transition: color 0.2s; }
         .cert-link:hover { color: var(--accent-color); }
 
         hr { border: 0; border-top: 1px solid #333; margin: 20px 0; }
@@ -161,27 +151,49 @@
         <section>
             <h2>Summary</h2>
             <p>
-                Transformation and project leader with a background in education, technology integration, and organizational development. I've led large-scale digital initiatives across multiple institutions, collaborated with senior leadership to implement strategic change, and managed cross-functional teams through complex transitions.
+                Transformation and project leader with a background in education, technology integration, and organizational development. I've led large-scale digital initiatives across multiple institutions, collaborated with senior leadership to implement strategic change, and managed cross-functional teams through complex transitions. My work includes AI policy development, infrastructure upgrades, and the rollout of enterprise platforms like Microsoft 365 and SharePoint. I bring a practical, people-focused approach to innovation, grounded in agile project management, stakeholder engagement, and staff enablement.
             </p>
+            <ul class="skills-list">
+                <li><a class="cert-link" href="https://drive.proton.me/urls/2ZC8TPATN0#ZFu4avRMxDmX" target="_blank">Download Resume PDF</a></li>
+            </ul>
         </section>
 
         <section>
             <h2>Skills & Certifications</h2>
+            
             <h3>Technical Skills</h3>
             <ul class="skills-list">
                 <li>Microsoft 365</li>
                 <li>SharePoint</li>
+                <li>Monday</li>
+                <li>ClickUp</li>
                 <li>Power Platform</li>
-                <li>AI Policy & Governance</li>
-                <li>LMS & SIS</li>
-                <li>Data Analysis</li>
+                <li>AI Policy Development & Governance Frameworks</li>
+                <li>Data Analysis & Reporting</li>
+                <li>LMS, SIS and CMS</li>
+                <li>Curriculum & Training Design</li>
+                <li>Cloud-based Collaboration Tools (MS, Google)</li>
+            </ul>
+
+            <h3>Professional Skills</h3>
+            <ul class="skills-list">
+                <li>Agile & Lean Project Management</li>
+                <li>Risk Management & Regulatory Compliance</li>
+                <li>Strategic Planning & Communication</li>
+                <li>Change Management & Organizational Development</li>
+                <li>Staff Training, Mentoring & Enablement</li>
+                <li>Stakeholder Engagement & Cross-functional Collaboration</li>
+                <li>Vendor Management & Procurement Strategy</li>
             </ul>
 
             <h3>Certifications</h3>
             <ul class="skills-list">
-                <li><a class="cert-link" href="#">IT Management</a></li>
-                <li><a class="cert-link" href="#">Azure AI Fundamentals</a></li>
+                <li><a class="cert-link" href="https://www.certiport.com/Portal/pages/Certifications.aspx" target="_blank">IT Management</a></li>
+                <li><a class="cert-link" href="#">Digital Transformation Strategy</a></li>
                 <li><a class="cert-link" href="#">Agile Project Management</a></li>
+                <li><a class="cert-link" href="https://drive.proton.me/urls/GSTJSJVBWG#rtyuA5pABuns" target="_blank">Azure AI Fundamentals</a></li>
+                <li><a class="cert-link" href="https://drive.proton.me/urls/WECM9NTD9M#4vG06uN6nnPE" target="_blank">Power Platform Fundamentals</a></li>
+                <li><a class="cert-link" href="https://drive.proton.me/urls/W7A8C0BH4W#HVGJ9aK7bU65" target="_blank">Microsoft Certified Educator</a></li>
             </ul>
         </section>
 
@@ -189,24 +201,45 @@
 
         <section>
             <h2>Work Experience</h2>
+
             <div>
                 <div class="job-header">
                     <h3 class="job-title">Head of Digital Transformation | SAJBE</h3>
-                    <span class="job-dates">Jan 2022 - April 2025</span>
+                    <span class="job-dates">January 2022 - April 2025</span>
                 </div>
                 <ul>
                     <li>Led institutional change across the school network, mentoring teams and managing training for up to 400 staff members.</li>
+                    <li>Successfully adopted the MIE Expert program into 8 of 10 schools with a 70% retention rate for four years.</li>
+                    <li>Spearheaded the development and coordination of Professional Learning Communities, including the creation and adoption of an AI Framework and Policy.</li>
                     <li>Collaborated with C-Suite senior leadership to develop and implement a multi-phase digital transformation vision.</li>
+                    <li>Oversaw the procurement of STEAM equipment and managed the upgrade of classroom and computer lab facilities.</li>
+                    <li>Used the Microsoft Education Transformation Framework focusing on Leadership & Policy, Teaching & Learning and Student & School Success.</li>
                 </ul>
             </div>
 
             <div>
                 <div class="job-header">
-                    <h3 class="job-title">Director of EdTech & Innovation | SABJE</h3>
-                    <span class="job-dates">Feb 2020 - April 2025</span>
+                    <h3 class="job-title">Director of EdTech & Innovation | SABJE (King David High School)</h3>
+                    <span class="job-dates">February 2020 - April 2025</span>
                 </div>
                 <ul>
-                    <li>Led institutional-wide digital transformations, including the successful transition to remote learning.</li>
+                    <li>Led institutional-wide digital transformations, including the successful transition to remote learning and online examinations for the flagship school during lockdown.</li>
+                    <li>Instituted and developed an internal AI professional learning community focusing on AI policy and curriculum frameworks.</li>
+                    <li>Introduced AI fundamentals to grade 9 students as a subject choice offering, including computer vision and machine learning fundamentals.</li>
+                    <li>Redeveloped the grade 8+9 curriculum for elective choices using the United Nations Standard Development Goals and ISTE standards as the framework.</li>
+                    <li>Managed the rollout of new digital platforms, including online parent-teacher evenings, a Learner Management System, and proctoring software.</li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="job-header">
+                    <h3 class="job-title">Senior English Teacher | SABJE (King David High School)</h3>
+                    <span class="job-dates">July 2016 - December 2022</span>
+                </div>
+                <ul>
+                    <li>Taught grades 8-12 with a particular focus on grade 11+12 students for the National Senior Certificate (IEB).</li>
+                    <li>Served as a sub-examiner for three years and a marker for ten years for the Independent Examination Board of South Africa (IEB).</li>
+                    <li>Acted as a mentor for new teachers, guiding them on best educational practice.</li>
                 </ul>
             </div>
         </section>
@@ -215,8 +248,8 @@
 
         <section class="education">
             <h2>Education</h2>
-            <p><strong>Postgraduate Certificate in Education</strong> | Rhodes University</p>
-            <p><strong>Bachelor of Arts: Political Theory</strong> | Rhodes University</p>
+            <p><strong>Postgraduate Certificate in Education (English Literature & History)</strong> | Rhodes University, Grahamstown, South Africa</p>
+            <p><strong>Bachelor of Arts: Political Theory & International Relations</strong> | Rhodes University, Grahamstown, South Africa</p>
         </section>
     </div>
 
