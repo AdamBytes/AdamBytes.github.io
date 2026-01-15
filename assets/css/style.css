@@ -19,40 +19,96 @@ body {
   padding: 0;
 }
 
-h1, h2, h3 { color: var(--heading); margin-top: 0; }
+h1, h2, h3 { 
+  color: var(--heading); 
+  margin-top: 0; 
+}
 
 a { 
   color: var(--accent); 
   text-decoration: none; 
+  transition: 0.2s;
 }
 
-a:hover { text-decoration: underline; }
+a:hover { 
+  text-decoration: underline; 
+}
+
+/* --- Header & Navigation --- */
+header {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  background-color: var(--card-bg);
+  border-bottom: 2px solid var(--border);
+}
+
+.profile-pic {
+  width: 120px !important;
+  height: 120px !important;
+  border-radius: 50% !important;
+  object-fit: cover;   
+  margin: 0 auto 1rem;
+  display: block;
+  border: 2px solid var(--border);
+}
+
+nav {
+  margin-top: 1.5rem;
+}
+
+nav a {
+  margin: 0 1rem;
+  font-weight: bold;
+}
+
+/* --- Main Layout --- */
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
 
 /* --- Post Summary Cards --- */
 .post-summary {
   display: flex;
-  flex-direction: column; /* This is the "Best Practice" fix for your links */
-  gap: 10px;
+  flex-direction: column; 
+  gap: 8px;
   background-color: var(--card-bg);
   padding: 1.5rem;
   margin-bottom: 2rem;
   border-radius: 8px;
   border: 1px solid var(--border);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* Specific styling for the Read More link */
 .post-summary a {
-  display: block;      /* Ensures it takes its own line */
-  margin-top: 10px;    /* Adds spacing from the paragraph above */
+  display: block !important; /* This forces the Read More link to its own line */
+  margin-top: 12px;
   font-weight: bold;
-  width: fit-content;  /* Prevents the "clickable" area from spanning the whole screen */
+  width: fit-content;
 }
 
 .post-summary p {
-  margin: 5px 0;
-  color: var(--text-main);
+  margin: 4px 0;
 }
 
-.post-summary p strong {
-  color: var(--text-dim); /* Dims the "Date:" label slightly for better hierarchy */
+/* --- Active Nav Link --- */
+.active-nav-link {
+    color: var(--accent) !important; 
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 5px;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .profile-pic {
+    width: 100px !important;
+    height: 100px !important;
+  }
 }
