@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Explosion — Adam's Bytes</title>
+  <meta name="description" content="HTB Explosion walkthrough — RDP misconfigurations, xfreerdp, and a blank administrator password." />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+  <header>
+<h1><span>Adam's</span> Bytes</h1>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../../about.html">About</a>
+      <a href="../../lab.html">Lab</a>
+      <a href="../../htb.html" class="active-nav-link">HTB</a>
+      <a href="../../WarGamesOTW.html">OtW</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="post-header">
+      <div class="eyebrow">// HTB &middot; Getting Started &middot; Tier 0</div>
+      <h1>HTB: Explosion</h1>
+      <p class="post-date">17 October 2025</p>
+    </div>
+
+    <div class="post-body">
+
+      <p><strong>Lab Objective:</strong> Explosion is the fifth machine in the Starting Point Tier 0 series. It focuses on the Remote Desktop Protocol (RDP) — specifically, what happens when a system is misconfigured and a threat actor can fully compromise it with no credentials.</p>
+
+      <h2>Important Considerations</h2>
+
+      <ul>
+        <li><strong>RDP (Remote Desktop Protocol)</strong> — allows team members to remotely connect to other hosts via a graphical interface.</li>
+        <li><strong>Ports</strong> — 3389 TCP and 3389 UDP.</li>
+        <li><strong>Telnet</strong> — an outdated remote access tool, unsecure by default. Long replaced by SSH.</li>
+        <li><strong>SSH (Secure Shell Protocol)</strong> — adds authentication and encryption layers to the base communication model.</li>
+        <li><strong>Use cases for remote access</strong> — patch delivery, file transfers, log transfers, remote management.</li>
+      </ul>
+
+      <h2>Enumeration</h2>
+
+      <p>Nmap scan: <code>nmap -p- -sV {targetIP}</code>. Scanning all 65,535 ports with service version detection.</p>
+
+<blockquote>
+  <p>135/tcp &nbsp;open &nbsp;msrpc &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Microsoft Windows RPC<br />
+  139/tcp &nbsp;open &nbsp;netbios-ssn &nbsp;Microsoft Windows netbios-ssn<br />
+  445/tcp &nbsp;open &nbsp;microsoft-ds?<br />
+  3389/tcp open &nbsp;ms-wbt-server Microsoft Terminal Services</p>
+</blockquote>
+
+      <p><strong>Task 1 — What does RDP stand for?</strong><br />
+      Answer: Remote Desktop Protocol.</p>
+
+      <p><strong>Task 2 — What 3-letter acronym refers to command-line interface interaction?</strong><br />
+      Answer: CLI.</p>
+
+      <p><strong>Task 3 — What about graphical user interface interactions?</strong><br />
+      Answer: GUI.</p>
+
+      <p><strong>Task 4 — What old remote access tool came without encryption and listens on TCP port 23?</strong><br />
+      Answer: Telnet.</p>
+
+      <p><strong>Task 5 — What is the name of the service running on port 3389 TCP?</strong><br />
+      Answer: <code>ms-wbt-server</code>.</p>
+
+      <h2>Establishing a Foothold</h2>
+
+      <p><strong>Task 6 — What switch specifies the target host's IP address in xfreerdp?</strong><br />
+      Answer: <code>/v:</code>. Connect with: <code>xfreerdp /v:{targetIP}</code>.</p>
+
+      <p><strong>Task 7 — What username returns a desktop with a blank password?</strong><br />
+      Answer: <code>Administrator</code>. This is the classic misconfiguration — the Administrator account with no password set.</p>
+
+      <p><strong>Task 8 — Submit root flag.</strong><br />
+      Answer: Follow the steps above. Once inside the remote desktop, the flag is visible on the filesystem.</p>
+
+      <h2>Final Thoughts</h2>
+
+      <p>A straightforward exercise, but an important one. Getting a full graphical desktop from a blank administrator password is not a sophisticated attack — it is a configuration failure. The lesson is not about the tool, it is about what gets left unchecked at deployment.</p>
+
+    </div>
+
+    <div class="post-nav">
+      <span>&larr; <a href="HTB-Redeemer.html">HTB: Redeemer</a></span>
+      <span><a href="HTB-Preignition.html">HTB: Preignition &rarr;</a></span>
+    </div>
+  </main>
+</body>
+</html>

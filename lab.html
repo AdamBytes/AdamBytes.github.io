@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Tiramisu — Adam's Bytes</title>
+  <meta name="description" content="Project Tiramisu: a Blue Team home lab built from scratch on commodity hardware. Proxmox, OPNsense, Wazuh, n8n, Tailscale. Documented in full." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .phase-block {
+      margin-bottom: 36px;
+      animation: fadeUp 0.6s ease both;
+      opacity: 0;
+    }
+    .phase-block:nth-child(1) { animation-delay: 0.20s; }
+    .phase-block:nth-child(2) { animation-delay: 0.30s; }
+
+    .phase-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 14px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin: 28px 0 36px;
+      animation: fadeUp 0.6s 0.15s ease both;
+      opacity: 0;
+    }
+    .stack-item {
+      background: rgba(25,22,34,0.7);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .stack-item .si-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted2); margin-bottom: 4px;
+    }
+    .stack-item .si-name {
+      font-family: 'Lora', serif;
+      font-size: 15px; color: var(--white); font-weight: 600;
+    }
+    .stack-item .si-desc {
+      font-size: 12px; color: var(--muted); margin-top: 3px;
+    }
+    .stack-item.si-teal { border-color: rgba(56,196,168,0.2); }
+    .stack-item.si-amber { border-color: rgba(221,160,48,0.2); }
+
+    .playbook-card {
+      background: rgba(56,196,168,0.06);
+      border: 1px solid rgba(56,196,168,0.2);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 32px 0;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.35s ease both;
+      opacity: 0;
+    }
+    .playbook-card p {
+      font-size: 14px; color: var(--muted); margin: 0; max-width: 480px;
+    }
+    .playbook-card strong { color: var(--teal); }
+  </style>
+</head>
+<body>
+
+  <header>
+<h1><span>Adam's</span> Bytes</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="lab.html" class="active-nav-link">Lab</a>
+      <a href="htb.html">HTB</a>
+      <a href="WarGamesOTW.html">OtW</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="series-header">
+      <div class="eyebrow">// Blue Team Home Lab</div>
+      <h1>Project Tiramisu</h1>
+      <p>A fully documented build of a Blue Team security lab on commodity hardware — from bare metal to a functioning detection and response stack. Every decision explained. Every failure included.</p>
+      <span class="phase-badge">Phase 1 Complete · Phase 2 In Progress</span>
+    </div>
+
+    <!-- Stack summary -->
+    <div class="section-label" style="animation: fadeUp 0.5s 0.1s ease both; opacity:0;">// The Stack</div>
+    <div class="stack-grid">
+      <div class="stack-item si-amber">
+        <div class="si-label">Hypervisor</div>
+        <div class="si-name">Proxmox VE</div>
+        <div class="si-desc">Bare-metal, Type 1. Runs everything.</div>
+      </div>
+      <div class="stack-item si-teal">
+        <div class="si-label">Firewall</div>
+        <div class="si-name">OPNsense</div>
+        <div class="si-desc">Network segmentation, WAN gateway.</div>
+      </div>
+      <div class="stack-item si-teal">
+        <div class="si-label">SIEM</div>
+        <div class="si-name">Wazuh</div>
+        <div class="si-desc">Log collection, anomaly detection, alerts.</div>
+      </div>
+      <div class="stack-item si-amber">
+        <div class="si-label">SOAR</div>
+        <div class="si-name">n8n</div>
+        <div class="si-desc">Automated response workflows.</div>
+      </div>
+      <div class="stack-item si-teal">
+        <div class="si-label">Visualisation</div>
+        <div class="si-name">Grafana + Loki</div>
+        <div class="si-desc">Dashboards and log search.</div>
+      </div>
+      <div class="stack-item si-amber">
+        <div class="si-label">Remote Access</div>
+        <div class="si-name">Tailscale</div>
+        <div class="si-desc">WireGuard mesh. No port forwarding.</div>
+      </div>
+    </div>
+
+    <!-- Phase 1 posts -->
+    <div class="phase-block">
+      <div class="phase-title">// Phase 1 — Foundation</div>
+
+      <a href="posts/tiramisu-00.html" class="post-card" style="animation-delay:0.22s">
+        <div>
+          <div class="card-meta">12 Mar 2026 · Post 00</div>
+          <div class="card-title">Why I stopped watching tutorials and built a lab instead</div>
+          <div class="card-desc">The motivation post. Tutorial loops, the intimidation of starting, and what pushed me to finally build something real.</div>
+        </div>
+        <span class="card-tag ct-blog">Published</span>
+      </a>
+
+      <a href="#" class="post-card" style="animation-delay:0.30s; opacity:0.5; pointer-events:none;">
+        <div>
+          <div class="card-meta">Coming soon · Post 01</div>
+          <div class="card-title">Choosing the stack: what to run and why everything changed</div>
+          <div class="card-desc">The original plan called for ELK, Shuffle, and TheHive. Then I looked at the RAM budget.</div>
+        </div>
+        <span class="card-tag ct-otw">Drafting</span>
+      </a>
+
+      <a href="#" class="post-card" style="animation-delay:0.38s; opacity:0.5; pointer-events:none;">
+        <div>
+          <div class="card-meta">Coming soon · Post 02</div>
+          <div class="card-title">Installing Proxmox on a Wi-Fi-only laptop</div>
+          <div class="card-desc">Proxmox doesn't do Wi-Fi. Here's what that means, why it matters, and the USB adapter that fixed it.</div>
+        </div>
+        <span class="card-tag ct-otw">Drafting</span>
+      </a>
+
+      <a href="#" class="post-card" style="animation-delay:0.46s; opacity:0.5; pointer-events:none;">
+        <div>
+          <div class="card-meta">Coming soon · Post 03</div>
+          <div class="card-title">Building the network: bridges, OPNsense, and the partition war</div>
+          <div class="card-desc">Four hours. One error message. Five commands — once I knew where to look.</div>
+        </div>
+        <span class="card-tag ct-otw">Drafting</span>
+      </a>
+
+      <a href="#" class="post-card" style="animation-delay:0.54s; opacity:0.5; pointer-events:none;">
+        <div>
+          <div class="card-meta">Coming soon · Post 04</div>
+          <div class="card-title">Remote access without port forwarding: Tailscale in a home lab</div>
+          <div class="card-desc">Most guides assume you can port forward. With LTE and CGNAT, you cannot. Here's the solution.</div>
+        </div>
+        <span class="card-tag ct-otw">Drafting</span>
+      </a>
+
+      <a href="#" class="post-card" style="animation-delay:0.62s; opacity:0.5; pointer-events:none;">
+        <div>
+          <div class="card-meta">Coming soon · Post 05</div>
+          <div class="card-title">Three devices, one lab: the full architecture explained</div>
+          <div class="card-desc">Phase 1 complete. How three consumer devices become a coherent security lab — and why Laptop 2 runs LUKS.</div>
+        </div>
+        <span class="card-tag ct-otw">Drafting</span>
+      </a>
+    </div>
+
+    <!-- Phase 2 posts -->
+    <div class="phase-block">
+      <div class="phase-title">// Phase 2 — Security Stack (Upcoming)</div>
+
+      <a href="#" class="post-card" style="animation-delay:0.70s; opacity:0.35; pointer-events:none;">
+        <div>
+          <div class="card-meta">Upcoming · Post 06</div>
+          <div class="card-title">Deploying Wazuh, the jump box, and getting OPNsense online</div>
+          <div class="card-desc">The firewall was installed. But without a device on the internal network, I couldn't reach its GUI.</div>
+        </div>
+        <span class="card-tag ct-otw">Upcoming</span>
+      </a>
+
+      <a href="#" class="post-card" style="animation-delay:0.78s; opacity:0.35; pointer-events:none;">
+        <div>
+          <div class="card-meta">Upcoming · Post 07</div>
+          <div class="card-title">First detections: n8n, Grafana, and the alert that fired at 2am</div>
+          <div class="card-desc">The payoff post. The dashboard is live. Something got detected. Here's what it was.</div>
+        </div>
+        <span class="card-tag ct-otw">Upcoming</span>
+      </a>
+
+      <a href="#" class="post-card" style="animation-delay:0.86s; opacity:0.35; pointer-events:none;">
+        <div>
+          <div class="card-meta">Upcoming · Post 08</div>
+          <div class="card-title">Attacking my own lab: the first Red Team exercise</div>
+          <div class="card-desc">I built the defences. Then I tried to break them. Here's what Wazuh caught and what it missed.</div>
+        </div>
+        <span class="card-tag ct-otw">Upcoming</span>
+      </a>
+    </div>
+
+    <!-- Playbook download -->
+    <div class="playbook-card">
+      <div>
+        <strong>Full Technical Playbook — Phase 1</strong>
+        <p>The complete reference document: architecture decisions, configuration files, failure log, and Phase 2 roadmap. ~35 pages.</p>
+      </div>
+      <a href="assets/playbook/blueteam_homelab_playbook_v1.docx" class="hlink hlink-ghost" download>Download .docx ↓</a>
+    </div>
+
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Mongod — Adam's Bytes</title>
+  <meta name="description" content="HTB Mongod walkthrough — MongoDB, NoSQL databases, and what happens when a document store ships with default settings." />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+  <header>
+<h1><span>Adam's</span> Bytes</h1>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../../about.html">About</a>
+      <a href="../../lab.html">Lab</a>
+      <a href="../../htb.html" class="active-nav-link">HTB</a>
+      <a href="../../WarGamesOTW.html">OtW</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="post-header">
+      <div class="eyebrow">// HTB &middot; Getting Started &middot; Tier 0</div>
+      <h1>HTB: Mongod</h1>
+      <p class="post-date">5 January 2026</p>
+    </div>
+
+    <div class="post-body">
+
+      <p><strong>Lab Objective:</strong> Mongod is the seventh machine in the Starting Point Tier 0 series, available with VIP access. We explore MongoDB — a document-oriented NoSQL database organised into databases, collections, and documents. Documents store data in a JSON-like format containing strings, numbers, and dates. Misconfiguration leads to the vulnerability here, as it does across most of this tier.</p>
+
+      <div class="callout">
+        <p><strong>Transparency note:</strong> I used the walkthrough extensively throughout this lab. I had no prior knowledge of MongoDB and I detail what I took from that experience in the Final Thoughts below.</p>
+      </div>
+
+      <h2>Enumeration</h2>
+
+      <p>With the walkthrough's guidance, the correct Nmap command here is: <code>nmap -p- --min-rate 1000 -sV {targetIP}</code></p>
+
+      <p>The extra flags: <code>-p-</code> scans all 65,535 ports; <code>--min-rate 1000</code> sets the minimum packets per second Nmap should send; <code>-sV</code> detects service versions.</p>
+
+      <p><strong>Task 1 — How many TCP ports are open?</strong><br />
+      Answer: 2.</p>
+
+      <p><strong>Task 2 — Which service is running on port 27017?</strong><br />
+      Answer: MongoDB 3.6.8.</p>
+
+      <p><strong>Task 3 — What type of database is MongoDB?</strong><br />
+      Answer: NoSQL.</p>
+
+      <h2>Establishing a Foothold</h2>
+
+      <p><strong>Task 4 — What command launches the interactive MongoDB shell?</strong><br />
+      Answer: <code>mongosh</code>. Connect directly to the target: <code>mongosh {targetIP}</code>.</p>
+
+      <p><strong>Task 5 — What command lists all databases on the server?</strong><br />
+      Answer: <code>show dbs</code>.</p>
+
+      <p><strong>Task 6 — What command lists collections in a database?</strong><br />
+      Answer: <code>show collections</code>.</p>
+
+      <p><strong>Task 7 — What command dumps the content of all documents in a collection named <code>flag</code>?</strong><br />
+      Answer: <code>db.flag.find()</code>.</p>
+
+      <p><strong>Task 8 — Submit the Flag.</strong><br />
+      Answer: Follow the steps above to retrieve it.</p>
+
+      <h2>Final Thoughts</h2>
+
+      <ul>
+        <li>I did not enjoy the feeling of not knowing what I was doing, or the reliance on the guide walkthrough. But I took it as a learning opportunity.</li>
+        <li>I will not always know everything, especially this early. What matters is how I engage with the unknown — not skipping it, but looking it up, reading around it, making notes.</li>
+        <li>The final lesson: if a service is connected to the internet with default settings, no sophisticated hacking is required. Only the right client tool.</li>
+      </ul>
+
+      <p>Enumeration tells me what services are running on a host. When I feel overwhelmed by an unfamiliar service, the right move is research — not frustration. I should document the process, including how I dealt with not knowing.</p>
+
+    </div>
+
+    <div class="post-nav">
+      <span>&larr; <a href="HTB-Preignition.html">HTB: Preignition</a></span>
+      <span><a href="HTB-Synced.html">HTB: Synced &rarr;</a></span>
+    </div>
+  </main>
+</body>
+</html>

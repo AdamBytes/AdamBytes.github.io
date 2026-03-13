@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why I stopped watching tutorials and built a lab instead — Adam's Bytes</title>
+  <meta name="description" content="I had the certs, the notes, the TryHackMe modules. But I hadn't built anything. Here's what changed — and what Project Tiramisu is." />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+  <header>
+<h1><span>Adam's</span> Bytes</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../lab.html">Lab</a>
+      <a href="../htb.html">HTB</a>
+      <a href="../WarGamesOTW.html">OtW</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="post-header">
+      <div class="eyebrow">// Project Tiramisu · Post 00</div>
+      <h1>Why I stopped watching tutorials and built a lab instead</h1>
+      <p class="post-date">12 March 2026</p>
+    </div>
+
+    <div class="post-body">
+
+      <p>Apparently, there is as an assumed percentage of people who stop studying cybersecurity and this is well of 70%. Whether this is true or not doesn't matter but reading this alerted me to something - maybe this has to do with passive learning. On that assumption, there must be a point in every person's pursuit of learning cybersecurity where you feel as if you have hit a brick wall, second guessing your respective knowledge base or even believing that the material is beyond understanding. For all intents and purposes, your hitting your learning metrics - you're claiming your bits on Hack The Box, earning your certificates and checking off your knowledge on the seven layers of the OSI model. You have watched the video, taken the notes, maybe even earned a certificate as proof. And then you close the tab and nothing has changed. There is no artefact. There is no evidence that you did anything. The knowledge sits in your head in that fragile way that knowledge does when it has never been applied.</p>
+
+      <p>That is where I was.</p>
+
+      <p>I had been working through Try Hack Me's SEC1, Hack The Box's CJCA's learning paths, and the Google Cybersecurity Certificate. I was making progress by every measurable metric: certificates of completion and bits. But I was growing increasingly uncomfortable with one thing: I didn't believe that I knew what I was learning. Being a gamer, I've learnt about malware and trojans and keyloggers and and and but I genuinely looked at my home pc or network environment through the lens of keeping it secure. Sure, I'd pwned some very easy vulnerable machines but I had never owned a machine I had to keep running, secure, update and troubleshoot without a guided lab environment holding my hand. I was learning <em>about</em> cybersecurity without actually doing it in any environment I controlled.</p>
+
+      <p>So I decided to build a home lab. From scratch. On hardware I already owned.</p>
+
+      <p>This is the story of how that went.</p>
+
+      <h2>The intimidation problem</h2>
+
+      <p>You boot up your machine and navigate to firefox, you type in 'home lab setup'. Next thing you know, your down a rabbit hole of Reddit threads, StackExchange blogs and Medium write ups. You read and read and read and then realise, I know nothing compared to the people who've been doing this for years. So you stop. Until you realise, that they've been doing this for years because they just started and never stopped. So you start planning and preparing, noting what's necessary in a stack. You comb over forum posts reading everyone's definition of a VLAN. You sift through the YouTube tutorials for beginners that don't feel like they're for beginners or you're building a media home server instead of a Blue Team stack and ontop of all that you're forgetting all the acronyms that you read but never had to explain.</p>
+
+      <p>It is genuinely intimidating if you are coming from a learning background rather than a professional one. And that intimidation is, I think, one of the main reasons people stay in tutorial loops. I won't lie to you, tutorials feel safe. But they're not exercising you. They are structured. Someone tells you what to do next. A lab is the opposite of that — you make a decision, it breaks something and you have to figure out why.</p>
+
+      <p>What I learned: the intimidation is overstated. Not because building a lab is easy — it is not — but because the failures are instructive in a way that watching a video never can be. When you spend four hours on a partition error and finally figure out that FreeBSD names disks differently to Linux, you do not forget that. Ever. When you buy a USB-C adapter because Proxmox does not support Wi-Fi management interfaces and you have no built-in Ethernet port, you have learned something concrete about how hypervisors think about networking. The mistakes are the curriculum.</p>
+
+      <h2>What I had to work with</h2>
+
+      <p>I did not buy new hardware for this. That was a constraint and also, in retrospect, a useful one — because it forced decisions.</p>
+
+      <ul>
+        <li>A spare laptop: 16-core CPU, 16 GB RAM, NVMe drive — no built-in Ethernet port</li>
+        <li>A propietry LTE home router that had no portforwarding and no way of sideloading updated firmware</li>
+        <li>A desktop PC running Windows 11</li>
+        <li>A second laptop for daily use, reinstalled with Parrot OS and full-disk encryption</li>
+      </ul>
+
+      <p>The old laptop's missing Ethernet port turned out to matter enormously, and I cover it in detail in a later post. The short version: Proxmox, the hypervisor I chose, does not automatically configure Wi-Fi as a management interface. The solution cost about R120 from any electronics shop. Finding the problem took considerably longer than that.</p>
+
+      <h2>What I decided to build</h2>
+
+      <p>To start, a Blue Team home lab. Not a Red Team attacking machine (this is for later). I wanted to build a defensive infrastructure stack that mirrors what a small security operations centre might run. In its final revised form:</p>
+
+      <ul>
+        <li><strong>Proxmox VE</strong> — the hypervisor, running everything as VMs or Linux containers on the old laptop</li>
+        <li><strong>OPNsense</strong> — the firewall and network gateway, controlling what traffic goes where</li>
+        <li><strong>Wazuh</strong> — the SIEM, collecting logs from everything, detecting anomalies, raising alerts</li>
+        <li><strong>n8n</strong> — the SOAR layer, automating responses to those alerts</li>
+        <li><strong>Grafana and Loki</strong> — visualisation and log search</li>
+        <li><strong>Tailscale</strong> — secure remote access without port forwarding (important on an LTE connection)</li>
+      </ul>
+
+      <p>I say "final revised form" because the original plan was considerably heavier. I had planned to run a full ELK stack, Shuffle for SOAR, and TheHive for case management. Then I looked at the RAM budget and realised I was trying to run a small enterprise security operations centre on 16 GB of consumer laptop memory. The revised stack delivers equivalent capability at roughly half the RAM cost. That decision-making process is its own post.</p>
+
+      <h2>Why this blog exists</h2>
+
+      <p>I am writing this because I do not want to forget what I am learning and, I think this is the teacher side of me, making it accessible to others who want to go down the same path.</p>
+
+      <p>The official documentation for all of these tools is excellent and exhaustive. Again, that intimidation factor comes into play especially if you're coming from a learner background, without a mentor, doing this on evenings and weekends around other commitments. I hope this blog becomes the counter to that. I want to document my learning, exercise my commands and demonstrate the failures in a easy to read and familiar process. Plus I wanted to start writing again.</p>
+
+      <p>If you are studying for a cybersecurity certification and feeling stuck in tutorial loops: you do not need a rack. You do not need a budget. But I do hope you some extra time and devices lying around as it makes it easier. As I always told my students, I expect you to fail forward when trying new things and fail fast so you can iterate the next step - a willingness to fail and break things goes a long way in cementing your learning.</p>
+
+      <p>Let's get into it.</p>
+
+      <div class="callout">
+        <p><strong>The full technical playbook for Phase 1</strong> — architecture decisions, every configuration file, the failure log, and the Phase 2 roadmap will be made available in due time on my GitHub <a href="https://github.com/AdamBytes/project-tiramisu">Lab page</a>.</p>
+      </div>
+
+    </div>
+
+    <div class="post-nav">
+      <span>← <a href="../lab.html">Project Tiramisu</a></span>
+      <span><a href="#">Post 01: Choosing the stack →</a> <em style="color:var(--muted2); font-size:10px;">(coming soon)</em></span>
+    </div>
+
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Dancing — Adam's Bytes</title>
+  <meta name="description" content="HTB Dancing walkthrough — SMB enumeration, share access with a blank password, and why Port 445 still causes headaches." />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+  <header>
+<h1><span>Adam's</span> Bytes</h1>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../../about.html">About</a>
+      <a href="../../lab.html">Lab</a>
+      <a href="../../htb.html" class="active-nav-link">HTB</a>
+      <a href="../../WarGamesOTW.html">OtW</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="post-header">
+      <div class="eyebrow">// HTB &middot; Getting Started &middot; Tier 0</div>
+      <h1>HTB: Dancing</h1>
+      <p class="post-date">11 October 2025</p>
+    </div>
+
+    <div class="post-body">
+
+      <p><strong>Lab Objective:</strong> Dancing is the third machine in the Starting Point Tier 0 series. It focuses on SMB — the Server Message Block protocol — which allows shared access to files, printers, and serial ports between endpoints on a network.</p>
+
+      <h2>Important Considerations</h2>
+
+      <ul>
+        <li><strong>Port 445 TCP</strong> is reserved for SMB. It is used directly with no need for the NetBIOS layer.</li>
+        <li><strong>Windows</strong> — SMB is predominantly a Windows protocol, deeply integrated with networking and Active Directory. Many professionals still block it at the firewall level because of its history of exploitation.</li>
+        <li><strong>Exploitation risk</strong> — Port 445 and SMB shares are prone to being exploited, especially when accessed remotely with misconfigured permissions. Guest accounts and anonymous log-ons, as with FTP, are a significant vulnerability.</li>
+      </ul>
+
+      <h2>Enumeration</h2>
+
+      <p>As always, enumeration is the first and most critical step. We are gathering information about the target system before touching anything.</p>
+
+      <p><strong>Task 1 — What does SMB stand for?</strong><br />
+      Answer: Server Message Block. Scan with <code>sudo nmap -sV [IP]</code>.</p>
+
+      <p><strong>Task 2 — What port does SMB use?</strong><br />
+      Answer: 445.</p>
+
+      <p><strong>Task 3 — What is the service name for port 445 in the Nmap scan?</strong><br />
+      Answer: <code>microsoft-ds</code>.</p>
+
+      <p><strong>Task 4 — What flag with smbclient lists the available shares?</strong><br />
+      Answer: <code>-L</code>. Install smbclient if needed: <code>sudo apt-get install smbclient</code>.</p>
+
+      <p>When smbclient connects, it checks the authentication level. Without specifying a username it reverts to your local username. In a real engagement you would have done due diligence first — here we have two options: anonymous and guest authentication.</p>
+
+      <h2>Establishing a Foothold</h2>
+
+      <p><strong>Task 5 — How many shares are there on Dancing?</strong><br />
+      Answer: 4. The shares are: <code>ADMIN$</code>, <code>C$</code>, <code>IPC$</code>, and <code>WorkShares</code>.</p>
+
+      <p>We test each with: <code>smbclient \\\\{targetIP}\\ADMIN$</code> — leaving the password field blank.</p>
+
+      <p><strong>Task 6 — Which share can we access with a blank password?</strong><br />
+      Answer: <code>WorkShares</code>.</p>
+
+      <p><strong>Task 7 — What command downloads files from within the SMB shell?</strong><br />
+      Answer: <code>get</code>. Navigating the directory reveals two folders — Amy.J and James.P — each containing a text file.</p>
+
+<blockquote><p><code>\&gt; ls</code><br />
+<code>\&gt; cd Amy.J</code><br />
+<code>\Amy.J\&gt; get worknotes.txt</code></p></blockquote>
+
+      <p><strong>Task 8 — Submit the Flag.</strong><br />
+      Answer: Follow the steps above to find the flag inside the downloaded files.</p>
+
+      <h2>Final Thoughts</h2>
+
+      <ul>
+        <li>Make sure smbclient is installed and up to date before attempting this.</li>
+        <li>Always use the <code>help</code> command when exploring an unfamiliar service inside the shell.</li>
+        <li>Spend time reading documentation on what commands do — understanding the tool is more valuable than copying the command.</li>
+      </ul>
+
+    </div>
+
+    <div class="post-nav">
+      <span>&larr; <a href="HTB-Fawn.html">HTB: Fawn</a></span>
+      <span><a href="HTB-Redeemer.html">HTB: Redeemer &rarr;</a></span>
+    </div>
+  </main>
+</body>
+</html>

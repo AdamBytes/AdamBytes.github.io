@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Redeemer — Adam's Bytes</title>
+  <meta name="description" content="HTB Redeemer walkthrough — Redis, in-memory databases, and why unauthenticated key-value stores are a gift to attackers." />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+  <header>
+<h1><span>Adam's</span> Bytes</h1>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../../about.html">About</a>
+      <a href="../../lab.html">Lab</a>
+      <a href="../../htb.html" class="active-nav-link">HTB</a>
+      <a href="../../WarGamesOTW.html">OtW</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="post-header">
+      <div class="eyebrow">// HTB &middot; Getting Started &middot; Tier 0</div>
+      <h1>HTB: Redeemer</h1>
+      <p class="post-date">11 October 2025</p>
+    </div>
+
+    <div class="post-body">
+
+      <p><strong>Lab Objective:</strong> Redeemer is the fourth machine in the Starting Point Tier 0 series. The goal is to find the flag by exploiting a misconfigured Redis database server — a volatile, in-memory key-value store designed for caching and fast data retrieval.</p>
+
+      <h2>Important Considerations</h2>
+
+      <ul>
+        <li><strong>Redis</strong> is an In-Memory Database — volatile, stored as simple key-value pairs, and designed for caching. The flag will be stored as a value inside a key.</li>
+        <li><strong>The key tool</strong> here is <code>redis-cli</code> — a dedicated command-line client for the service. Install it with: <code>sudo apt install redis-tools</code>.</li>
+        <li><strong>The primary risk</strong> — sensitive data services must never be accessible without authentication, even if running on a non-standard port.</li>
+      </ul>
+
+      <h2>Enumeration</h2>
+
+      <p>We start with Nmap using <code>nmap -p- -sV {targetIP}</code>. The <code>-p-</code> flag scans all 65,535 TCP ports; <code>-sV</code> detects service versions.</p>
+
+      <p><strong>Task 1 — Which TCP port is open on the machine?</strong><br />
+      Answer: 6379. Confirmed via Nmap.</p>
+
+      <p><strong>Task 2 — Which service is running on that port?</strong><br />
+      Answer: Redis. Redis (REmote DIctionary Server) is an open-source NoSQL key-value data store used as a database, cache, and message broker.</p>
+
+      <p><strong>Task 3 — What type of database is Redis?</strong><br />
+      Answer: In-memory Database. The database is stored in the server's RAM for fast data access.</p>
+
+      <p><strong>Task 4 — Which command-line utility interacts with the Redis server?</strong><br />
+      Answer: <code>redis-cli</code>. It provides complete access to all Redis functionalities.</p>
+
+      <h2>Establishing a Foothold</h2>
+
+      <p><strong>Task 5 — Which flag specifies the hostname when using redis-cli?</strong><br />
+      Answer: <code>-h</code>. Connect with: <code>redis-cli -h {targetIP}</code>.</p>
+
+      <p><strong>Task 6 — Once connected, which command retrieves server information and statistics?</strong><br />
+      Answer: <code>info</code>.</p>
+
+      <p><strong>Task 7 — What version of Redis is running on the target?</strong><br />
+      Answer: 5.0.7.</p>
+
+      <p><strong>Task 8 — Which command selects a database in Redis?</strong><br />
+      Answer: <code>select</code>. Redis supports multiple databases indexed by number.</p>
+
+      <p><strong>Task 9 — How many keys are present in database index 0?</strong><br />
+      Answer: 4.</p>
+
+      <p><strong>Task 10 — Which command retrieves all keys in a database?</strong><br />
+      Answer: <code>keys *</code>. Use the <code>get</code> command on each key in turn — one of them will contain the flag.</p>
+
+      <h2>Final Thoughts</h2>
+
+      <ul>
+        <li>If a complex service is exposed, use its native client rather than generic tools.</li>
+        <li>In a key-value store, critical data is often named obviously — <code>flag</code>, <code>password</code>, <code>secret</code>. The exploitation path is simply: discover, select, retrieve.</li>
+        <li>The primary security lesson: sensitive data services must never be accessible without authentication, regardless of which port they run on.</li>
+      </ul>
+
+    </div>
+
+    <div class="post-nav">
+      <span>&larr; <a href="HTB-Dancing.html">HTB: Dancing</a></span>
+      <span><a href="HTB-Explosion.html">HTB: Explosion &rarr;</a></span>
+    </div>
+  </main>
+</body>
+</html>

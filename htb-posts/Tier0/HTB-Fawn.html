@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Fawn — Adam's Bytes</title>
+  <meta name="description" content="HTB Fawn walkthrough — FTP protocols, anonymous authentication, and Man-in-the-Middle considerations." />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+  <header>
+<h1><span>Adam's</span> Bytes</h1>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../../about.html">About</a>
+      <a href="../../lab.html">Lab</a>
+      <a href="../../htb.html" class="active-nav-link">HTB</a>
+      <a href="../../WarGamesOTW.html">OtW</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="post-header">
+      <div class="eyebrow">// HTB &middot; Getting Started &middot; Tier 0</div>
+      <h1>HTB: Fawn</h1>
+      <p class="post-date">14 September 2025</p>
+    </div>
+
+    <div class="post-body">
+
+      <p><strong>Lab Objective:</strong> Fawn is the second machine in the Starting Point Tier 0 series. The core focus is understanding that poorly configured services are vulnerable and can be exploited. In this case, we exercise our understanding of the File Transfer Protocol (FTP) — a long-standing protocol used for managing simple file tasks that can, when misconfigured, bypass firewall checks and expose network weaknesses.</p>
+
+      <h2>Important Considerations</h2>
+
+      <ul>
+        <li><strong>GUI/Terminal</strong> — FTP servers can be navigated through the terminal or a Graphical User Interface.</li>
+        <li><strong>Client/Server model</strong> — the client uploads from the host machine; the server is centralised storage. The host up/downloads while the server stores transferable data.</li>
+        <li><strong>Port number</strong> — FTP uses port 21, reserved for the protocol. A basic web server also needs SSH (port 22) and HTTPS (port 80).</li>
+        <li><strong>Man-in-the-Middle</strong> — FTP can require credentials before permitting access, but network traffic can be intercepted and files read in plaintext. Always add an encryption layer such as SSL or TLS to prevent MITM attacks.</li>
+      </ul>
+
+      <h2>Enumeration</h2>
+
+      <p><strong>Task 1 — What does the 3-letter acronym FTP stand for?</strong><br />
+      Answer: File Transfer Protocol. Also known as a listening port, typically found on port 21.</p>
+
+      <p><strong>Task 2 — What port does FTP use?</strong><br />
+      Answer: 21. Determined using: <code>sudo nmap -sV [IP Address]</code></p>
+
+      <p><strong>Task 3 — FTP sends data in the clear. What acronym describes its secure successor built on SSH?</strong><br />
+      Answer: SFTP (Secure File Transfer Protocol).</p>
+
+      <p><strong>Task 4 — What command sends an ICMP echo request to test our connection to the target?</strong><br />
+      Answer: <code>ping</code>. ICMP is the Internet Control Message Protocol — a network layer protocol used for error messages and diagnostics. An echo request sends a packet and waits to receive the same packet back, confirming the target is reachable.</p>
+
+      <p><strong>Task 5 — From your scans, what version is FTP running on the target?</strong><br />
+      Answer: vsftpd 3.0.3. Using <code>sudo nmap -sV [IP Address]</code> with <code>-sV</code> detecting service versions — useful for spotting outdated and exploitable software.</p>
+
+      <h2>Establishing a Foothold</h2>
+
+      <p><strong>Task 6 — What OS Type is running on the target?</strong><br />
+      Answer: Unix.</p>
+
+      <p><strong>Task 7 — What command displays the FTP client help menu?</strong><br />
+      Answer: <code>ftp -h</code>.</p>
+
+      <p><strong>Task 8 — What username is used to log into FTP without an account?</strong><br />
+      Answer: <code>anonymous</code>. A misconfigured FTP service allows any anonymous account to log in as any authenticated user. When prompted for a password, the service disregards it once the anonymous username is registered. This is negligent behaviour.</p>
+
+      <p><strong>Task 9 — What is the response code for a successful FTP login?</strong><br />
+      Answer: 230. The terminal confirms a successful login and lists available changes. To see the help menu, type <code>help</code>.</p>
+
+      <p><strong>Task 10 — Besides <code>dir</code>, how else can you list files on a Linux system?</strong><br />
+      Answer: <code>ls</code>. The distinction: <code>dir</code> returns a full directory listing; <code>ls</code> returns a simplified one.</p>
+
+      <p><strong>Task 11 — What command downloads a file found on the FTP server?</strong><br />
+      Answer: <code>get</code>. Specify the filename: <code>get flag.txt</code>. The file can then be read in the terminal or found in the downloads folder.</p>
+
+      <p><strong>Task 12 — Submit the root flag.</strong><br />
+      Answer: Follow the steps above to retrieve the flag.</p>
+
+      <h2>Final Thoughts</h2>
+
+      <ul>
+        <li>Make sure your own FTP version is up to date — you cannot exploit others with outdated tools.</li>
+        <li>Like in the gym, simple mistakes can have devastating consequences. A misconfigured FTP service is one of them.</li>
+        <li>Spend time reading documentation on what commands do to build a holistic understanding of the tool or service.</li>
+      </ul>
+
+    </div>
+
+    <div class="post-nav">
+      <span>&larr; <a href="HTB-Meow.html">HTB: Meow</a></span>
+      <span><a href="HTB-Dancing.html">HTB: Dancing &rarr;</a></span>
+    </div>
+  </main>
+</body>
+</html>

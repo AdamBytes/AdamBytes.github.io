@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Synced — Adam's Bytes</title>
+  <meta name="description" content="HTB Synced walkthrough — Rsync, anonymous module access, and syncing files off a server that never asked for credentials." />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+  <header>
+<h1><span>Adam's</span> Bytes</h1>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../../about.html">About</a>
+      <a href="../../lab.html">Lab</a>
+      <a href="../../htb.html" class="active-nav-link">HTB</a>
+      <a href="../../WarGamesOTW.html">OtW</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="post-header">
+      <div class="eyebrow">// HTB &middot; Getting Started &middot; Tier 0</div>
+      <h1>HTB: Synced</h1>
+      <p class="post-date">9 January 2026</p>
+    </div>
+
+    <div class="post-body">
+
+      <p><strong>Lab Objective:</strong> Synced is a Tier 0 machine focusing on Rsync — a utility for efficiently transferring and synchronising files between a local machine and a server by comparing modification times and file sizes. When misconfigured with anonymous access, it can expose entire directories without asking for a password.</p>
+
+      <h2>Important Considerations</h2>
+
+      <ul>
+        <li><strong>Port 873 TCP</strong> is the default Rsync port. It supports both local and remote file-copying.</li>
+        <li><strong>Modules</strong> — Rsync uses "modules," which are essentially directory shares. These can be configured with or without authentication. Anonymous access to modules in a professional environment can lead to significant data leaks.</li>
+        <li><strong>Encryption</strong> — like Telnet, Rsync does not provide transport encryption by default unless tunnelled through SSH. If misconfigured, an attacker can list, read, and sometimes write files without a password.</li>
+      </ul>
+
+      <h2>Enumeration</h2>
+
+      <p>Install the Rsync client if needed: <code>sudo apt install rsync</code>.</p>
+
+      <p>Nmap scan: <code>sudo nmap -sV [TARGET_IP]</code>.</p>
+
+      <p><strong>Task 1 — What is the default port for Rsync?</strong><br />
+      Answer: 873.</p>
+
+      <p><strong>Task 2 — How many TCP ports are open on the remote host?</strong><br />
+      Answer: 1.</p>
+
+      <p><strong>Task 3 — What is the protocol version used by Rsync on the remote host?</strong><br />
+      Answer: 31.</p>
+
+      <p><strong>Task 4 — What command lists the available modules on the target?</strong><br />
+      Answer: <code>rsync --list-only {targetIP}::</code>. The double colon <code>::</code> contacts the Rsync daemon directly.</p>
+
+      <h2>Establishing a Foothold</h2>
+
+      <p><strong>Task 5 — What is the name of the available share (module)?</strong><br />
+      Answer: <code>public</code>.</p>
+
+      <p><strong>Task 6 — What command lists the contents of the public share?</strong><br />
+      Answer: <code>rsync {targetIP}::public</code>.</p>
+
+      <p><strong>Task 7 — What is the name of the file found inside the share?</strong><br />
+      Answer: <code>flag.txt</code>. Sync it to your local machine with:</p>
+
+      <p><code>rsync {targetIP}::public/flag.txt .</code></p>
+
+      <p>The <code>.</code> copies the file to your current working directory.</p>
+
+      <p><strong>Task 8 — Submit the Flag.</strong><br />
+      Answer: Read the flag with <code>cat flag.txt</code>.</p>
+
+      <h2>Final Thoughts</h2>
+
+      <ul>
+        <li>Rsync is a powerful tool, but dangerous when anonymous login is left enabled on sensitive directories.</li>
+        <li>The <code>--list-only</code> flag is essential when enumerating unknown Rsync targets.</li>
+        <li>Always check for modules before guessing file paths.</li>
+      </ul>
+
+    </div>
+
+    <div class="post-nav">
+      <span>&larr; <a href="HTB-Mongod.html">HTB: Mongod</a></span>
+      <span><a href="HTB_Tier0-Overview.html">Back to Tier 0 &rarr;</a></span>
+    </div>
+  </main>
+</body>
+</html>

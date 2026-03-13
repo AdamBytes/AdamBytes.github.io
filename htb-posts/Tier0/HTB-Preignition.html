@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Preignition — Adam's Bytes</title>
+  <meta name="description" content="HTB Preignition walkthrough — directory brute-forcing with gobuster, finding a hidden admin panel, and default credentials." />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+  <header>
+<h1><span>Adam's</span> Bytes</h1>
+    <nav>
+      <a href="../../index.html">Home</a>
+      <a href="../../about.html">About</a>
+      <a href="../../lab.html">Lab</a>
+      <a href="../../htb.html" class="active-nav-link">HTB</a>
+      <a href="../../WarGamesOTW.html">OtW</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="post-header">
+      <div class="eyebrow">// HTB &middot; Getting Started &middot; Tier 0</div>
+      <h1>HTB: Preignition</h1>
+      <p class="post-date">17 October 2025</p>
+    </div>
+
+    <div class="post-body">
+
+      <p><strong>Lab Objective:</strong> Preignition is the sixth machine in the Starting Point Tier 0 series. It focuses on web enumeration and the discovery of administrative interfaces through directory brute-forcing — an introduction to <code>gobuster</code> and the concept of default login credentials.</p>
+
+      <h2>Enumeration</h2>
+
+      <p>Starting with an Nmap scan: <code>nmap -sV {targetIP}</code>.</p>
+
+      <p>The scan reveals a single open port: <strong>80 (HTTP)</strong>, running nginx 1.14.2. Navigating to <code>http://{targetIP}</code> in the browser shows a standard Nginx welcome page — no visible links or clues. We need to look for hidden files or directories.</p>
+
+      <h3>Directory Brute-Forcing with gobuster</h3>
+
+      <p>To find hidden paths we use gobuster. This was my first introduction to the tool. The general principle: use a common wordlist and look specifically for <code>.php</code> files, a common extension for administrative portals.</p>
+
+      <p><code>gobuster dir -u http://{targetIP} -w /usr/share/wordlists/dirb/common.txt -x php</code></p>
+
+      <p>Result: <code>/admin.php (Status: 200)</code> — successfully identified as a login page.</p>
+
+      <p><strong>Task 1 — What is the common name for directory brute-forcing?</strong><br />
+      Answer: Dir busting.</p>
+
+      <p><strong>Task 2 — What switch performs a service version scan with Nmap?</strong><br />
+      Answer: <code>-sV</code>.</p>
+
+      <p><strong>Task 3 — What service is running on port 80?</strong><br />
+      Answer: HTTP.</p>
+
+      <p><strong>Task 4 — What is the version of the Nginx server?</strong><br />
+      Answer: 1.14.2.</p>
+
+      <p><strong>Task 5 — Which gobuster switch specifies we are looking for directories?</strong><br />
+      Answer: <code>dir</code>.</p>
+
+      <p><strong>Task 6 — Which gobuster switch specifies file extensions to look for?</strong><br />
+      Answer: <code>-x</code>.</p>
+
+      <p><strong>Task 7 — What is the HTTP status code for a successful request?</strong><br />
+      Answer: 200.</p>
+
+      <h2>Establishing a Foothold</h2>
+
+      <p>Navigate to <code>http://{targetIP}/admin.php</code> — a simple login form. Before trying complex exploits, it is standard practice to test default credentials. "admin/admin" is left as the default surprisingly often.</p>
+
+      <ul>
+        <li>Username: <code>admin</code></li>
+        <li>Password: <code>admin</code></li>
+      </ul>
+
+      <p>The page refreshes to show the internal dashboard. The flag is displayed on screen.</p>
+
+      <p><strong>Task 8 — Submit the Flag.</strong><br />
+      Answer: Follow the steps above.</p>
+
+      <h2>Final Thoughts</h2>
+
+      <ul>
+        <li>You do not always need a fancy exploit to get in. Finding hidden folders and trying common passwords is often enough.</li>
+        <li>Just because a login page is not linked on the main website does not mean it is safe. True security comes from strong credentials, not obscurity.</li>
+      </ul>
+
+    </div>
+
+    <div class="post-nav">
+      <span>&larr; <a href="HTB-Explosion.html">HTB: Explosion</a></span>
+      <span><a href="HTB-Mongod.html">HTB: Mongod &rarr;</a></span>
+    </div>
+  </main>
+</body>
+</html>
