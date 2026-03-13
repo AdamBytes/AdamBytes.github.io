@@ -19,6 +19,6 @@ I've spent a decade leading digital transformation in education — building the
 ## Where to find me
 
 - **Blog:** [adambytes.github.io](https://adambytes.github.io)
-- **LinkedIn:** [linkedin.com/in/craigadamson](https://www.linkedin.com/in/craig-a-75b384108)
+- **LinkedIn:** [www.linkedin.com/in/craig-a-75b384108](https://www.linkedin.com/in/craig-a-75b384108)
 
 South Africa · EU work eligible · Open to opportunities
