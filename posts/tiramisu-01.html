@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>In chasing ELK - I found a little RAM</title>
+    <meta name="description" content="The original plan called for ELK, Shuffle, and TheHive. Then I looked at the RAM budget." />
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <header>
+<h1><span>Adam</span> Bytes</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../lab.html">Lab</a>
+      <a href="../htb.html">HTB</a>
+      <a href="../WarGamesOTW.html">OtW</a>
+    </nav>
+  </header>
+
+  <main>
+ <div class="post-header">
+      <div class="eyebrow">// Project Tiramisu · Post 01</div>
+      <h1>In chasing ELK - I found a little RAM</h1>
+      <p class="post-date">25 March 2026</p>
+    </div>
+    
+  <div class="post-body">
+    
+  <p>Creating a blue team SOC lab is an interesting exercise – conceptually, you believe you have things figured out.You start thinking you can put together a lab based on all the industry standard nameS: Elasticsearch. Logstash, Kibana (ELK) - all this for centralised logging and search. You think about Shuffle and how you can use that for security orchestartion and automated response. Your case management, surely that will be handeled TheHive. These are the names I was familiar with and exposed to - Reddit threads, job posting boards and peers and so, I wrote them down.</p>
+  <p>Here is what the original stack looked like on paper:</p>
+  <table>
+  <thead>
+    <tr>
+      <th align="left">Tool</th>
+      <th align="left">Purpose</th>
+      <th align="left">RAM Requirement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>VirtualBox</td>
+      <td>Virtualisation (Type 2 hypervisor)</td>
+      <td>~2–4 GB (host OS overhead)</td>
+    </tr>
+    <tr>
+      <td>OPNsense</td>
+      <td>Firewall</td>
+      <td>~2 GB</td>
+    </tr>
+    <tr>
+      <td>Elasticsearch</td>
+      <td>Log indexing and search</td>
+      <td>4–8 GB</td>
+    </tr>
+    <tr>
+      <td>Logstash</td>
+      <td>Log aggregation and parsing</td>
+      <td>1–2 GB</td>
+    </tr>
+    <tr>
+      <td>Kibana</td>
+      <td>Dashboard and GUI</td>
+      <td>1–2 GB</td>
+    </tr>
+    <tr>
+      <td>Shuffle</td>
+      <td>SOAR — automated response</td>
+      <td>4–8 GB</td>
+    </tr>
+    <tr>
+      <td>TheHive</td>
+      <td>Case management</td>
+      <td>4–6 GB</td>
+    </tr>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td></td>
+      <td><strong>~18–32 GB</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>The reality? The machine I was deploying to only has 16B of RAM - it's an old laptop that needed to find a new lease of life. </p>
+  <p>The math is clear, even at its lowest specficiation, my laptop could not act as a server for this blue team stack. It wants more than the hardware can provide and take into account Elasticsearch, when it's indexing events and Shuffle is running flows - 100% RAM would be used. In speaking to some friends, it became clear that this would be a liability - running a lab that is constantly memory-swapping, is a broken security tools - you cannot trust a system that is quietly dying. </p>
+  <p>I decided that I would have to visit those tools in the future and reassess my current enterprising opportunities. I know at the core of it, I want a always-on environment that is stable. I had to revisit the drawing board. </p>
+  
+  <h2>Proxmox over alternatives</h2>
+  <p>Knowing the bloat that comes from installing an OS, I found myself exploring Type 1 hypervisors - this was crucial as it runs the base of the stack.</p>
+  <p>A hypervisor is a software lyer that lets one physical machine run multiple isolated operating systems simulteanouesly. These are two categories and the difference matters for a lab that is meant to run continuously. </p>
+  <p>A <strong>type 2 hypervisor</strong> sits ontop of an existing operating system, think along the lines of VirtualBox. You'd normally have a Windows or Linux installtion on your machine and then install it ontop of that and then install your respective software. This approach is completely accepted and makes a lot of sense if you're spinning up testing environments or testdriving a new OS, anything for occasional use. But the problem comes down to the layering. The host OS is consuming RAM and CPU cycles constantly, even when you're not using it. On a 16GB machine, that is meant to be running a firewall, SIEM, SOAR and a Visualisation layer at the same time, that host OS overhead is expensive.</p>
+  <p>A <strong>type 1 hypervisor</strong> runs directly on the hardware with no operating sytem underneath it - it is the OS. Every resource that the machine has is available to the hypervisor and the system manages it, with nothing wasted on a general-purpose OS layer that you would barely interact with. </p>
+  <p>Proxmox is a type 1 hypervisor built on Debian Linux. It runs on the bare metal, it provides a web-based management interface accessible from any browser on the same network and supports both virtual machines and linux containers in the same interace. </p>
+  <p>It becomes easy to see the winner when it comes to constrained hardware. </p>
+  <p>There are other specific considerations in choosing Proxmox over somethin like ESXi and it mainly comes down to two things: Proxmox came as recommendation and I didn't want to pay for anything at this point. </p>
+  <p>Proxmox is open source, it is free to use and the community repository provides the same full package access without a subscription key. As I am starting out, I am pleased with the web UI in that it has all the respective features I need and it comes with LXC container support. This is important as Linux containers share the same kernal as Proxmox, reducing the RAM overhead. I also found that there is a large active home-lab community which is useful when you're developing these instances on a weekend or in the evenings. Having a knowledge base is really helpful. </p>
+
+  <h2>Why OPNsense over pfSense</h2>
+  <p>There is no complexity to this choice - it's what I discovered first. That said, it is worth noting that pfSense seems to be the go-to for a number of different reasons but when I started researching the differences for this  blog post, I found some interesting considerations that I didn't know at the time. </p>
+  <p>One argument is that OPNsense releases on a predictable schedule - about every two months with clear version numbers and public changelogs. pfSense on the other hand has, apparently, increasingly blurred the line between its community editions and its commercial products and the release cycle has slowed down because of this. Based on recommendation, it seems that if one is developing a homelab, an actively maintained codebase with transparent releases is the better call.</p>
+  <p>Having never used pfSense, I believe OPNsense's web UI is cleaner. In my configuration phase, I found the interface (mostly clean) and had no misunderstandings of what I was looking at - even if the terminology eluded me at the time. However, there is an argument to be made in that when learning to configure firewalls, NAT entries and VLAN assignments, the quality of an interface has a real effect on your learning capacity. But I chalk this down to just good design. </p>
+  <p>As an aside, I did read that when it came to using OPNsense, it is best to use Zenarmor for traffic visualisation and Suricata for IDS/IPS. Apparently they integrate better into the architecture of OPNsense. I will have to report back when I am using those tools actively.</p>
+
+  <h2>RAM(p)ing it up</h2>
+  <p>The original stack needed a minum of 18GB of RAM to run at idle. Already I've broken beyond the threshold of 16GB. Realistically, it's worse than that. Elasticsearch is a JAVA application and its documentation recommends allocating no more than half of the machine's RAM to it JVM heap - I would have had to give Elasticsearch 8GB of working memory, requiring that 16GB of my machine to exist solely for Elasticsearch. Logstash adds another 1-2GB and Kibana another 1-2. The ELK stack, when properly configured, wants 10-12GB on its own.</p>
+  <p>This is unfeasible as this only leaves 4-6GB for OPNsense. Shuffle, TheHive and the hypervisor itself, preventing any kind of headroom required to actually run the system under load.</p>
+
+  <h2>The revised stack</h2>
+
+  <p>Here is what the original stack looked like on paper:</p>
+<table>
+  <thead>
+    <tr>
+      <th align="left">Function</th>
+      <th align="left">Original Tool</th>
+      <th align="left">Revised Tool</th>
+      <th align="left">RAM Saved</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Firewall</td>
+      <td>pfSense CE</td>
+      <td>OPNsense 26.1</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>SIEM + Indexer</td>
+      <td>ELK Stack (3 separate services)</td>
+      <td>Wazuh All-in-One</td>
+      <td>~4 GB</td>
+    </tr>
+    <tr>
+      <td>SOAR</td>
+      <td>Shuffle (Docker swarm, multi-container)</td>
+      <td>n8n (single container)</td>
+      <td>~2–3 GB</td>
+    </tr>
+    <tr>
+      <td>Log visualisation</td>
+      <td>Kibana (standalone)</td>
+      <td>Grafana + Loki</td>
+      <td>~1 GB</td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>Welcome to Wazuh. Welcome to Wazuh. </p>
+  <p>I only heard about Wazuh prior from a friend before I started exploring building my own homelab. It was a tool they used frequently and it was the first option I thought about when I needed to rethink my approach. </p>
+  <p>Wazuh is a security platform that is built specifically for the monitoring use case that ELK is tpyically configured for in a SOC context. I don't know what OpenSearch is yet but apparently its a spin-off of it - a purpose-built tool for security event data. Running Wazug All-in-one via the official install script deploys the manageer, indexer and dashboard as a single unified service - not three seperate components that each need their own memory allocation. </p>
+  <p>The result at the end of the day, this stack delivers equivalent detection and altering capability - log capability, anomoly detection, rule-based alerting, compliance dashboards - at about half the RAM cost. The drawback? It does not provide a full flexibility for a raw ELK deployment where you are building every index patter and dashboard from scratch. But I think that's okay right now, as part of my Phase 1 homelab, I want to spend more time building accurate detection logic rather than maintaining configuration. </p>
+
+  <h2>The revised stack - explained</h2>
+
+  <p><strong>OPNsense - security desk at the entrance</strong></p>
+  <p>Every packet entering or leaving the lab passes through OPNsense first. It decides what is allowed and what is blocked and what gets logged. It is the digital boundary between the home network and the isolated lab environment. Nothing reaches the internal lab without OPNsense permitting it.</p>
+
+  <p><strong>Wazuh - the CCTV systemWazuh - the CCTV system</strong></p>
+  <p>Once traffic is inside the lab, Wazuh will be the one that watches it. It collects logs from every device and container in the new environment, runs these logs against detection rules and raises alerts when something looks wrong. Where OPNsense controls the perimiter, Wazuh is the internal monitor. </p>
+
+  <p><strong>n8n - the guard who acts on the alert</strong></p>
+  <p>Wazuh raises an alert and n8n decides what to do about it. Send a notification, create a ticket, trigger an automated response. Fundamentally, n8n is a workflow automation tool - it is not a security product by design but it can handle SOAR logic relatively well. Structurally, n8n deploys as a single lightweight container and does not require a Docker swarm to run. Shuffle, its replacement, needed 2-3 GB to operate, n8n runs at under 512 when idle. </p>
+
+  <p><strong>Grafana + Loki - the managers dashboard</strong></p>
+  <p>Grafana provides the visualisation layer: it has time-series dashboards, alter trend charts, system health panels. Loki is its log aggregation backend and it runs easier than Elasicsearch might have done. Combined, they provide an overview of "what is happening right now" that a SOC operator would look at throughout a shift.</p>
+
+  <p><strong>Tailscale — the secure key to the building</strong></p>
+  <p>The lab runs on a machine connected to a domestic LTE router operating under CGNAT, which means there is no public IP address and no way to port forward from the internet. Tailscale creates an encrypted WireGuard mesh between the lab machine, the desktop, and any other enrolled device, so the entire lab is reachable remotely without exposing anything to the public internet. It runs as a daemon on the Proxmox host and uses almost no resources.</p>
+
+  <p><strong>AdGuard</strong></p>
+  <p>Before any device in the lab even attempts to connect to a website or service, it has to ask AdGuard for the "address" (DNS). AdGuard acts as the first filter; if a device tries to call home to a known tracking server, a malicious domain, or an intrusive ad network, AdGuard simply says "address not found." By sinkholing these requests at the DNS level, it stops threats before a single packet of malicious content is even downloaded.</p>
+
+  <p>The RAM budget that makes this work:</p>
+  <table>
+  <thead>
+    <tr>
+      <th align="left">Component</th>
+      <th align="left">Allocation</th>
+      <th align="left">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Proxmox Host OS</td>
+      <td>1.5 GB</td>
+      <td>Web GUI, bridge management, Tailscale daemon</td>
+    </tr>
+    <tr>
+      <td>OPNsense VM</td>
+      <td>1.5 GB</td>
+      <td>Firewall and NAT</td>
+    </tr>
+    <tr>
+      <td>Linux Mint XFCE (Jump Box VM)</td>
+      <td>2.0 GB</td>
+      <td>Browser and terminal access to lab GUI</td>
+    </tr>
+    <tr>
+      <td>Wazuh All-in-One LXC</td>
+      <td>4.0 GB</td>
+      <td>Manager, Indexer, and Dashboard</td>
+    </tr>
+    <tr>
+      <td>n8n SOAR LXC</td>
+      <td>2.0 GB</td>
+      <td>SQLite backend, lightweight footprint</td>
+    </tr>
+    <tr>
+      <td>Headroom / System Buffer</td>
+      <td>5.0 GB</td>
+      <td>Stability margin; future Grafana + Loki</td>
+    </tr>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td><strong>16.0 GB</strong></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>The 5GB headroom is a deliberate effort - you will notice tha I have not setup my AdGuard in the setup, it was something I decided to add at the last minute. If I recall, I think I allocated 1GB to it, leaving 4GB leftover. From what I understand about Linux, memory pressure causes the kernal to swart swapping processes to disk which introduces latency. In a professional enviroment this is poor professionalism but as a homelab, I don't mind too much. But the idea is to make the lab as trustworthy as possible. </p>
+
+
+  <h2>The architecture principle that matters most</h2>
+
+  <table>
+  <thead>
+    <tr>
+      <th align="left">Layer</th>
+      <th align="left">Component</th>
+      <th align="left">Responsibility</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Physical hardware</td>
+      <td>Raw compute and connectivity</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Proxmox</td>
+      <td>Virtualisation, bridge networking, snapshots</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>OPNsense</td>
+      <td>Firewalling, NAT, DHCP</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>AdGuard</td>
+      <td>DNS Filtering</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Wazuh</td>
+      <td>Detection and alerting</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>n8n</td>
+      <td>Automated response</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Grafana + Loki</td>
+      <td>Visualisation</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Tailscale</td>
+      <td>Remote access</td>
+    </tr>
+  </tbody>
+</table>
+
+  <p>It's important to note that each layer has a single responsibility and this contribute meaninfully to good security context. When a layer does one thing, you can reasonably determine what each layer should and should not see. When a layer does more than on thing, the troubleshooting and debugging becomes mor difficult.</p>
+  <p>A good way of demonstrating the above principle is to provide a demonstration of the current  network bridge architecture. Proxmox creates two virtual network bridges 'vmbr0' and 'vmbr1'. 'vmbr0' connects to the USB-C ethernet adaptor - my physical link to the home network. 'vmbr1' has no physical interface at all - it exists only inside the machine's memory as a complete virtual switch that no device on the home network can reach directly.</p>
+  <p>OPNsense sits across both bridges - one interface on 'vmbr0' that is facing the home network and 'vmbr1' facing the internal lab. Every packet of data moves between those two worlds passes through OPNsense. There is no other path that it can use to reach the internal network and vice versa. This is what makes firewall a real security boundary rather than a decoration. 'vmbr1' cannot be reached by bypassing OPNsense - it is not physically connected to anything that would allow that. This becomes useful when examining vulnerable machines or malware or other suspicious tools.</p>
+  <p>The firewall becomes a crucial point in the structural design - this is what seperates a lab where the firewall is genuinly enforcing policy from a lab where the firewall is present but irrelevant. </p>
+
+  <div class="callout">
+        <p><strong>The full technical playbook for Phase 1</strong> — architecture decisions, every configuration file, the failure log, and the Phase 2 roadmap will be made available in due time on my GitHub <a href="https://github.com/AdamBytes/project-tiramisu">Lab page</a>.</p>
+  </div>
+  </div>
+
+    <div class="post-nav">
+      <span>← <a href="../lab.html">Project Tiramisu</a></span>
+      <span><a href="#">Post 02: Installing Proxmox →</a> <em style="color:var(--muted2); font-size:10px;">(coming soon)</em></span>
+    </div>
+  </main>
+</body>
+</html>
