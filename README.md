@@ -1,6 +1,6 @@
 # Hi.
 
-I've spent a decade leading digital transformation in education — building the platforms, policies, and people-programmes that make technology work in the real world. Now I'm expanding into **cybersecurity** and **AI governance**, and I'm building that depth deliberately and in public.
+I've spent some time leading digital transformation in education — building the platforms, policies, and people-programmes that make technology work in the real world. Now I'm expanding into **cybersecurity** and **AI governance**, and I'm building that depth and in public.
 
 ## What I'm working on
 
@@ -10,7 +10,7 @@ I've spent a decade leading digital transformation in education — building the
 
 ## Currently
 
-- Google Cybersecurity Certificate — modules 1–5 complete
+- Google Cybersecurity Certificate — Completed
 - CompTIA Security+ — studying
 - TryHackMe Security Engineer path — in progress
 - HTB Getting Started — Tier 0 complete
@@ -18,7 +18,7 @@ I've spent a decade leading digital transformation in education — building the
 
 ## Where to find me
 
-- **Blog:** [adambytes.github.io](https://adambytes.github.io)
+- **Git:** [adambytes.github.io](https://adambytes.github.io)
 - **LinkedIn:** [www.linkedin.com/in/craig-a-75b384108](https://www.linkedin.com/in/craig-a-75b384108)
 
 South Africa · EU work eligible · Open to opportunities
