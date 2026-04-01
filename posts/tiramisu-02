@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: sans-serif;
+}
+table, th, td {
+  border: 1px solid #444;
+}
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+pre {
+  background: var(--code-bg, #1a1a2e);
+  color: var(--code-fg, #e0e0ff);
+  padding: 1rem 1.2rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.88em;
+  line-height: 1.6;
+  margin: 1.2rem 0;
+}
+code {
+  font-family: 'Fira Mono', 'Cascadia Code', monospace;
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Proxmox on Old Laptops — What Nobody Tells You — Adam Bytes</title>
+<meta name="description" content="The USB-C adapter that fixed everything. The bridge-ports line that broke it. The wpa_supplicant rabbit hole that taught me how Proxmox actually thinks about networking." />
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header>
+  <h1><span>Adam</span> Bytes</h1>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../lab.html">Lab</a>
+    <a href="../htb.html">HTB</a>
+    <a href="../WarGamesOTW.html">OtW</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="post-header">
+    <div class="eyebrow">// Project Tiramisu · Post 02</div>
+    <h1>Cutting my teeth with Proxmox</h1>
+    <p class="post-date">27 March 2026</p>
+  </div>
+
+  <div class="post-body">
+
+    <p>Being new to the space of building a homelab, after deciding what to buid, I was faced with two questions: "what am I doing right now?" and "Can I pull this off?". This was my realisation in facing my over-confidence: I had read some documentatio and I watched a few videos and I understood, somewhat, that this was going to be an exercise. In a sport like powerlifting, you have your frameworks: nutrition, traing schedule and sleep. Sleep is the crucial component to actually make the previous components genuinely work. In this case, sleep comes down to my newbie experience: learning and documenting and excessive Googling as I went a long - I know what should happen but how do I make it happen? But like any exercise, you haven't prepared for every obstacle.</p>
+
+    <p>This is that post. As part of my homelab experience, I want to document the process as it unfolds, not the expected version of what's supposed to happen - there is enough of that. Plus I get to develop a playbook along the way. Here is the non-theoretical version of that journey and it includes the dead ends, a hardware workaround that I needed to employ and a weird single line in a configuration file that stood between me and a working management interface. Every tutorial says I can be up and running in thiry minutes. I admit, this took me much longer. What do they say, enjoy the journey not the outcome? Okay. </p>
+
+    <h2>Getting Proxmox</h2>
+
+    <p>Proxmox VE is available at <a href="https://www.proxmox.com/en/downloads" target="_blank" rel="noopener noreferrer">Proxmox</a> as a free ISO download. The version I installed was 8.x. You write it to a USB stick using balenaEtcher (a cross-platform operating system image flashing tool). The installation USB is then treated as the machine's boot device: plug it in, restart, access the boot menu (on most laptops this is F12 or F2 at POST — check the model) and select the USB.</p>
+
+    <p>The graphical installer loads and it is a standard installtion wizard. You can expect to work through the license agreement, target disk selection, timezone and keyboard and network configuration. Each step matters and some of the decisions made here have long-term consequences that are worth spelling out, particularly the hostname and network values.</p>
+
+    <h2>The Hostname Decision</h2>
+
+    <p>Proxmox asks for a Fully Qualified Domain Name — a URL name in the format of <em>hostname.domain</em>. Not only is this cool to look at but the hostname becomes the machine's identity on the local network: it shows up in log entries and certificates. Fundamentally, it affects how DNS tools and VPN software refer to the machine later. Getting it wrong is correctable but annoying. I haven't had to do this but I believe it.</p>
+
+    <p>I considered three options before settling on a final choice. I had initially wanted something more creative and I spent longer on this than was strictly rational. For the sake of learning, I will list the final three considerations because each of them have their own nuances:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Candidate</th>
+          <th>Decision</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>latvia.ussr</strong></td>
+          <td>Rejected</td>
+          <td>.ussr is a deleted top-level domain - I didn't know this. I just thought it would be cool to create a network based on former USSR proxy-states - in hindsight, probably not the best idea. On a pragmatic level, this domain no longer exists on the public internet. Using a deleted TLD as your internal domain suffix risks genuine DNS resolution edge cases if you ever configure VPN split tunnelling or a local DNS resolver — both of which are on my roadmap.</td>
+        </tr>
+        <tr>
+          <td><strong>trifle.home</strong></td>
+          <td>Acceptable but set aside</td>
+          <td>Then I started thinking that this is a layered process and wanted to use a dessert cause it's memorable and easy to digest. The .home suffix is understood as internal/private, but I've read that it has less universal recognition than .lan in home-lab tooling and routing software.</td>
+        </tr>
+        <tr>
+          <td><strong>tiramisu.lan</strong></td>
+          <td>Chosen</td>
+          <td>Keeping in line with the dessert, I settled on a sophistcated layered one cause it also takes time: tiramisu. .lan is the established convention for private local-area networks. It clearly signals to routers and DNS tools that this device is local-only and should not be looked up on the public internet. Additionally, it also happened to align with a naming convention that felt appropriately unpretentious for a laptop sitting on a shelf.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Installation Parameters</h2>
+
+    <p>After the hostname, the installer asks for four network values. These need to be set deliberately rather than accepted as defaults. After some Googling and using some knowledge, I knew that using the wrong values here can lock you out of the management interface immediately after first boot. Before touching the installer, I had opened my home router admin page on my phone to confirm the subnet and gateway address.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Value Used</th>
+          <th>Reasoning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>IP Address (CIDR)</strong></td>
+          <td>192.168.0.100/24</td>
+          <td>Static IP in the home network subnet. The .100 address keeps it safely above the typical DHCP range (most home routers hand out from .2 upward through the lower range) without being high enough to conflict with anything. A server needs a fixed address — if it gets a different IP on each boot, every tool that refers to it by address stops working.</td>
+        </tr>
+        <tr>
+          <td><strong>Gateway</strong></td>
+          <td>192.168.0.1</td>
+          <td>The home routers address — the machine that handles outbound internet traffic, connecting me to the internet. Confirming this before installation is worth the thirty seconds it takes.</td>
+        </tr>
+        <tr>
+          <td><strong>DNS Server</strong></td>
+          <td>1.1.1.1</td>
+          <td>I had been reading about DNS's and the various one's can use instead of the designated one pointed to an ISP. I settled on Cloudflare's public DNS. Using the router's default would route all DNS queries through the ISP, which logs them. Cloudflare reportedly has built-in DDoS protection, increased user privacy and fast DNS resolution. I don't know if I need these things, but I like them. This is a temporary measure — at the time of development this was a temporary measure as I have since added AdGuard Home onto the tiramisu stack and this takes over DNS duties.</td>
+        </tr>
+        <tr>
+          <td><strong>Target Disk</strong></td>
+          <td>nvme0n1 (NVMe internal)</td>
+          <td>The laptop's internal SSD. The USB installation stick was also visible (as sda) — the wrong selection here would have overwritten the installer itself. Check carefully before confirming.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>After configuration, my installation completes and the machine reboots. The Proxmox console login screen appears. The text reads: <code>tiramisu login:</code>. This was a cool moment. I had the makings of a server. The username is <strong>root</strong> and the password is whatever you set in the installer. When typing the password at the console, don't get freaked out, but no characters appear — this is standard Linux security behaviour, not a fault.</p>
+
+    <p>The web-based management interface should now be accessible from any browser on the same network at <code>https://192.168.0.100:8006</code>. Your browser will report that the connection is not private — this is expected behaviour for a self-signed certificate on a local server with no public trust chain. Click through via Advanced, then Proceed. A "No valid subscription" banner appears on first login. This is normal on the free community edition and does not restrict any functionality whatsoever.</p>
+
+    <p>In my case, none of that happened. The page would not load.</p>
+
+    <h2>The Core Problem: Proxmox and Wi-Fi Do Not Mix</h2>
+
+    <p>In the pursuit of aesthetics, laptops are becoming Bella Hadid. My laptop that I was using had no  built-in Ethernet (RJ45) port. It connects to the network via Wi-Fi, which I had assumed would be sufficient - a foolish consideration on my part and understanding why it is wrong is genuinely useful — not just for fixing this problem but for understanding a fundamental aspect of how Proxmox manages networking.</p>
+
+    <p>The Proxmox Virtual Environment does not have a native Wi-Fi and does not officially support WiFi for its management interface or network bridging - you can activate through some manual intervention but I can only foresee headaches. Proxmox, as part of its installation, creates a virtual network bridge called <code>vmbr0</code>. A bridge is a software-defined switch — it takes a physical network interface and makes it available not just to the host machine but to any virtual machine running on that host. This is how virtual machines (VMs) get network access: they plug into the bridge and the bridge is anchored to a physical interface.</p>
+
+    <p>The problem with Wi-Fi is structural. Wi-Fi cards implement a security feature at the hardware level that prevents MAC address bridging. Every device on a network has a MAC address — a harcoded hardware identifier used for local delivery of network packets. A standard Ethernet bridge works by passing frames between devices based on their MAC addresses. Wi-Fi cards refuse to forward frames addressed to MAC addresses other than their own, by design. This is a feature of the 802.11 specification, not a bug in Proxmox. It means you cannot cleanly bridge a Wi-Fi interface and give VMs access through it. I didn't know this. Now I have a general understanding.</p>
+
+    <p>There are workarounds — NAT through the Wi-Fi interface is one of them. This introduces introduce complexity than I wanted: they are difficult to maintain, and they are not stable in a server context where the goal is for the machine to run unattended for weeks at a time. Proxmox does not officially support Wi-Fi as a management interface for exactly this reason. The documentation assumes wired connectivity because professional servers always have wired connectivity.</p>
+
+    <p>The practical consequence: after installation, <code>vmbr0</code> was configured to bridge a wired Ethernet interface but the laptop had no wired Ethernet interface. The bridge existed but had nothing to connect to. My web GUI was unreachable. I came to the conlusion that I needed to by an adaptor, but I was resistant as it was late at night and I wanted to complete this process now.</p>
+
+    <h2>The wpasupplicant Dead End</h2>
+
+    <p>Before accepting that I needed to buy hardware, I spent time exploring whether I could get Wi-Fi working on Proxmox from the command line. This is documented here not as a recommended path — it isn't — but because the investigation taught me something concrete about how the Proxmox ISO is structured, and because I think honest accounts of dead ends are more useful than clean retrospective narratives.</p>
+
+    <p>The tool for connecting Linux to WPA2 Wi-Fi networks is <code>wpa_supplicant</code>. It handles the security handshake with the router. Without it, the network card hardware is present but has no software capable of authenticating with a protected Wi-Fi network. The question was whether I could install it from the Proxmox installation USB that was still plugged in i.e. could I find the driver files to make this work on on the USB I used to install Proxmox</p>
+
+    <p>First step: identify the USB device. Two commands:</p>
+
+    <pre><code>lsusb           # lists USB devices by hardware ID
+lsblk           # lists all block storage devices</code></pre>
+
+    <p>The internal NVMe drive appeared as <code>nvme0n1</code>. The USB stick appeared as <code>sda</code>. The naming reversal (you might expect the internal drive to be sda) is not unusual on laptops where the NVMe bus is handled separately from SATA/USB. It is not a problem — just something to confirm before running any commands that reference device names.</p>
+
+    <p>Next: mount the USB to read its contents.</p>
+
+    <pre><code>mount /dev/sda1 /mnt</code></pre>
+
+    <p>In lamens term, this command asks Linux to <code>mount</code> the device <code>/dev/sda1</code>. Or I thought but I didn't declare it correctly to the rules of the command properly.</p>
+
+
+    <p>This returned an error: "wrong fs type, bad option, bad superblock." I have also learnt that when attempting to mount a device, you also have to declare the <code>filesystem_type</code> The partition uses ISO 9660 format — a read-only format used specifically for optical disc images. The correct mount command requires a type flag:</p>
+
+    <pre><code>mount -t iso9660 /dev/sda2 /mnt</code></pre>
+
+    <p>So this asks to Linux to treat <code>-t</code> the the device <code>/dev/sda2/</code> as <code>iso9600</code> and label the directory or partition of where you want it to appear as mnt <code>/mnt</code>
+
+    <p>This succeeded. The USB contents became visible: directories named boot, debian, efi, proxmox, and two large files — <code>pve-base.squashfs</code> and <code>pve-installer.squashfs</code>. And I learnt another key finding: Proxmox does not store individual software packages as loose files. Everything is compressed into SquashFS archives — a read-only compressed filesystem. The <code>wpa_supplicant</code> package was in there, but inaccessible without unpacking.</p>
+
+    <p>Unpacking a SquashFS archive requires mounting it via a loop device — a Linux mechanism that treats a file as though it were a physical disk. The command would be:</p>
+
+    <pre><code>mount -o loop /mnt/pve-base.squashfs /tmp/squash</code></pre>
+
+    <p>This failed: "failed to setup loop device." The kernel module required for loop devices — <code>loop.ko</code> — was not loaded in the post-install environment. The investigation was over. The package was confirmed present and confirmed inaccessible.</p>
+
+    <p>The conclusion from this session: if you are deploying Proxmox on a Wi-Fi-only laptop, do not start. Buy the adapter first.</p>
+
+    <h2>The monetary Fix</h2>
+
+    <p>A USB-C to RJ45 Ethernet adapter. I bought one, plugged it in, connected an Ethernet cable from the adapter to the home router and the adapter was immediately detected by Proxmox as a standard wired interface. This is the non-negotiable first step for anyone running this hardware configuration.</p>
+
+    <p>However, plugging in the adapter was not the end of the problem. The web GUI still did not load.</p>
+
+    <h2>The Bridge-Ports Error</h2>
+
+    <p>When Proxmox installed, it created <code>vmbr0</code> and attempted to assign it a bridge port — the physical interface that the bridge would connect to. At that point, no Ethernet interface existed on the machine, so Proxmox wrote a placeholder. The configuration file contained something that referred to an interface that did not match the newly attached adapter. The bridge existed but it was anchored to nothing real.</p>
+
+    <p>Proxmox's network configuration lives in a single file: <code>/etc/network/interfaces</code>. You edit it at the console using a text editor. The <code>nano</code> editor is the most accessible — arrow keys to navigate, <code>Ctrl+O</code> to save, <code>Ctrl+X</code> to exit.</p>
+
+    <pre><code>nano /etc/network/interfaces</code></pre>
+
+    <p>The first thing to do is identify the actual interface name of the USB-C adapter. Proxmox names Ethernet interfaces based on their MAC address, which means the name is specific to the hardware. To find it:</p>
+
+    <pre><code>ip link</code></pre>
+
+    <p>This lists all network interfaces on the system. Look for an entry that is not <code>lo</code> (the loopback), not <code>wlp</code> (Wi-Fi), and not <code>vmbr</code> (a bridge). On most USB Ethernet adapters, the name begins with <code>enx</code> followed by the adapter's MAC address — twelve hexadecimal characters with no separators. Note down the exact name you see. It will be unique to your hardware.</p>
+
+    <p>The corrected <code>/etc/network/interfaces</code> configuration looks like this:</p>
+
+    <pre><code>auto lo
+iface lo inet loopback
+
+iface enxYOURINTERFACENAME inet manual
+
+auto vmbr0
+iface vmbr0 inet static
+        address 192.168.0.100/24
+        gateway 192.168.0.1
+        bridge-ports enxYOURINTERFACENAME
+        bridge-stp off
+        bridge-fd 0
+        # External bridge: USB-C adapter → home router
+
+auto vmbr1
+iface vmbr1 inet manual
+        bridge-ports none
+        bridge-stp off
+        bridge-fd 0
+        # Internal bridge: no physical anchor — isolated lab LAN
+
+auto vmbr2
+iface vmbr2 inet manual
+        bridge-ports none
+        bridge-stp off
+        bridge-fd 0
+        # Red Team / Attack network — isolated, no physical anchor</code></pre>
+
+    <p>Replace <code>enxYOURINTERFACENAME</code> on both lines with the exact name returned by <code>ip link</code>. The name must be identical in both places — the <code>iface</code> declaration and the <code>bridge-ports</code> directive. A single character difference means the bridge has no physical anchor and the GUI remains unreachable.</p>
+
+    <p>After saving the file, apply the new configuration without rebooting:</p>
+
+    <pre><code>ifreload -a</code></pre>
+
+    <p>If there are no errors, test from another machine on the same network:</p>
+
+    <pre><code>ping 192.168.0.100</code></pre>
+
+    <p>When the replies come back, the Proxmox web GUI is now accessible at <code>https://192.168.0.100:8006</code>. That first page load is a genuine milestone. Everything after this point is configuration rather than plumbing.</p>
+
+    <div class="callout">
+      <p><strong>On bridge-ports and what the directive actually does.</strong> The <code>bridge-ports</code> line is what physically connects a virtual switch to the real world. When set to a valid interface name, packets arriving on that physical interface are delivered to the bridge and from the bridge to any VM whose virtual NIC is attached to it. When set to <code>none</code> — as with vmbr1 and vmbr2 — the bridge becomes a completely internal switch. No packet from the home network can reach it directly, because there is no physical path. This is not a limitation; it is the security model. vmbr1 and vmbr2 can only be reached by going through OPNsense, which sits with one interface in each bridge. The firewall is a real boundary precisely because the bridges are isolated.</p>
+    </div>
+
+    <h2>Three Bridges, Not Two</h2>
+
+    <p>The configuration above includes three bridges: <code>vmbr0</code>, <code>vmbr1</code>, and <code>vmbr2</code>. Most home lab guides show two. The third is something I employed for my project a little down the line.</p>
+
+    <p><code>vmbr0</code> connects to the physical USB-C Ethernet adapter. It is the WAN side — the interface that faces the home router. The Proxmox management interface and OPNsense's WAN port both connect here.</p>
+
+    <p><code>vmbr1</code> is the internal Blue Team network. It has no physical ports. Every lab VM — the SIEM, the SOAR container, the management jump box — connects to this bridge. Traffic in and out passes through OPNsense. This is where normal lab operations happen.</p>
+
+    <p><code>vmbr2</code> is the Attack network, isolated from both vmbr1 and the home network. It does not exist for Phase 1 in any meaningful operational sense. I just wanted to create it now, making sure that the OPNsense VM can be configured with all three interfaces from the start. Adding interfaces to a running firewall VM later requires additional steps and potentially disrupts network connectivity. Getting the topology right on first deployment avoids rework later. Phase 3 will deploy Red Team tooling on vmbr2 and use it for controlled attack simulations against the Blue Team stack on vmbr1.</p>
+
+    <h2>Repository Fix and System Updates</h2>
+
+    <p>Proxmox defaults to its enterprise repository, which requires a paid subscription key to access. I don't want to pay for something I have no concept of using. Without a key, running <code>apt update</code> returns a 401 authentication error. This is a known issue with the free community edition and there is a standard fix.</p>
+
+    <p>The easiest path is through the Proxmox web GUI rather than the command line. Navigate to the designated node ( in my case it's tiramisu) in the left panel, then go to Updates, then Repositories. The enterprise repository entry can be disabled by clicking it and selecting Disable. Then add the no-subscription community repository by clicking Add and selecting the no-subscription option from the dropdown. Click Apply, then run Refresh under Updates. The output should complete with <code>TASK OK</code>.</p>
+
+    <p>From this point, the package manager works normally. Running a full system update is the first order of business:</p>
+
+    <pre><code>apt update &amp;&amp; apt dist-upgrade -y</code></pre>
+
+    <p>This ensures the hypervisor is running current packages before any VMs are deployed on top of it.</p>
+
+    <h2>Tailscale — Access Without Port Forwarding</h2>
+
+    <p>Tailscale is a mesh VPN built on WireGuard. Installing it on the Proxmox host creates a permanent encrypted tunnel between the lab machine and any other device enrolled in the same Tailscale network — the desktop, the second laptop, even a mobile device. Each enrolled device gets a fixed address in the <code>100.x.y.z</code> range that never changes regardless of the physical network either device is on.</p>
+
+    <p>For this lab, this solves a specific problem: my home router is an LTE router that operates under CGNAT — Carrier-Grade Network Address Translation — which means there is no public IP address assigned to the router and no way to port forward from the internet. Without Tailscale, the Proxmox GUI would only be reachable from inside the home network. With Tailscale, it is reachable from anywhere, through an encrypted WireGuard tunnel, without exposing any port to the public internet.</p>
+
+    <p>Tailscale also functions as a safety net. If a firewall misconfiguration ever blocks access to the Proxmox GUI on the local network, Tailscale routes around it via its own virtual interface. It is insurance as much as it is access.</p>
+
+    <p>Installation on the Proxmox host is a single command:</p>
+
+    <pre><code>curl -fsSL https://tailscale.com/install.sh | sh</code></pre>
+
+    <p>After installation, authenticate the machine to your Tailscale network:</p>
+
+    <pre><code>tailscale up</code></pre>
+
+    <p>This outputs a URL. Open it in a browser, log in to the Tailscale account you created for the lab (a dedicated lab identity, separate from any personal accounts — see the Operational Security (OpSec) note below) and the machine is enrolled. Confirm the Tailscale IP address:</p>
+
+    <pre><code>tailscale ip -4</code></pre>
+
+    <p>Make a note of this address. Then go to the Tailscale admin console and disable key expiry for the tiramisu node — by default, Tailscale requires periodic reauthentication to keep a machine active. A server running unattended cannot go through a browser-based auth flow, so key expiry must be disabled to keep the lab reachable indefinitely.</p>
+
+    <div class="callout">
+      <p><strong>On identity and OpSec.</strong> Tailscale requires authentication through a third-party identity provider — Google, Microsoft, GitHub, or Apple. For lab infrastructure, a dedicated account and email address created specifically for this purpose is the correct approach. This separation means your lab's access credentials are not tied to your personal identity or any production accounts. If the lab account is ever compromised, the blast radius is contained.</p>
+    </div>
+
+    <h2>In closing</h2>
+
+    <p>I want to say something about the moment the Proxmox interface first loaded in a browser, because it matters more than it might sound. It was not just a web page. It was the first tangible evidence that the laptop had stopped being a laptop and become a server — something that runs independently, that hosts other systems, that has defined responsibilities and a defined perimeter. The browser was pointing at the lab. The lab existed.</p>
+
+    <p>That shift in what the machine <em>is</em> is not something you get from a tutorial. You get it from having built it, from having hit the Wi-Fi wall and bought the adapter and edited the config file and run <code>ifreload -a</code> and watched the ping replies come back. The knowledge is differently weighted when it cost you something to acquire it — even if what it cost was only a Saturday afternoon and some money.</p>
+
+    <p>The next post covers what came next: getting OPNsense installed onto its virtual machine, which turned out to be considerably more complicated than the Proxmox installation itself. There is a GPT header remnant, a FreeBSD disk naming convention I was not expecting, and several hours of investigation that ended with manual partition table surgery.</p>
+
+    <div class="callout">
+      <p><strong>Project files for this post</strong> will be added in completion when phase 1 of this project is complete. In the mean time, look at my project page found here: <a href="https://github.com/AdamBytes/project-tiramisu">github.com/AdamBytes/project-tiramisu</a>.</p>
+    </div>
+
+  </div>
+
+  <div class="post-nav">
+    <span>← <a href="tiramisu-01.html">Post 01: In chasing ELK — I found a little RAM</a></span>
+    <span><a href="#">Post 03: The OPNsense Partition War →</a> <em style="color:var(--muted2); font-size:10px;">(coming soon)</em></span>
+  </div>
+
+</main>
+
+</body>
+</html>
